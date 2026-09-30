@@ -1,6 +1,12 @@
 # Portal interno: que no aparezca en buscadores
 <IfModule mod_headers.c>
   Header set X-Robots-Tag "noindex, nofollow"
+
+  # HTML, CSS y JS: el navegador siempre revisa si hay versión nueva,
+  # así un deploy nunca mezcla archivos viejos con nuevos.
+  <FilesMatch "\.(html|css|js)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
 </IfModule>
 
 DirectoryIndex index.html

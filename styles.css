@@ -944,7 +944,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   /* Sidebar como panel que entra desde la izquierda */
   .sidebar {
     position: fixed;
@@ -986,16 +986,21 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round
   }
   .mobile-logo { height: 18px; width: auto; }
 
-  .content { padding: 0 16px 32px; }
+  .content { padding: 0 24px 32px; }
   .section { padding-top: 56px; scroll-margin-top: 72px; }
   .section--first { padding-top: 24px; }
   .greet { font-size: 26px; }
-  .stats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+  .stats { gap: 12px; }
+}
+
+@media (max-width: 640px) {
+  .content { padding: 0 16px 32px; }
+  .rules, .steps { grid-template-columns: minmax(0, 1fr); }
+  .stats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .stats .stat:last-child { grid-column: 1 / -1; }
   .service-row { padding: 20px 16px; margin: 0; }
   .dot-panel { margin: 0 -16px; border-radius: 0; }
   .service { flex-basis: 84%; }
-  .rules, .steps { grid-template-columns: minmax(0, 1fr); }
   .calc { padding: 16px; }
   .calc-result { min-height: 160px; padding: var(--space-6); }
   .lock-card { padding: var(--space-8) var(--space-6); border-radius: 40px; }
