@@ -223,7 +223,7 @@
           <p class="price">${money(s.precio)}<small>MXN${periodo(s)}</small></p>
           <p class="price-iva">${money(withIva(s.precio))} con IVA, si requiere factura</p>
         </div>
-        <div class="earn"><span>Tu comisión</span><strong>${money(s.comision)}</strong></div>
+        <div class="earn"><span>Comisión</span><strong>${money(s.comision)}</strong></div>
         <p class="earn-note">${esc(s.comisionNota)}</p>
         ${has(s.clienteIdeal) || has(s.dolor) ? `
           <div class="service-meta">
@@ -373,6 +373,26 @@
   menuBtn.addEventListener('click', () => (shell.classList.contains('menu-open') ? closeMenu() : openMenu()));
   $('#scrim').addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => e.key === 'Escape' && closeMenu());
+
+  // Ocultar / mostrar en escritorio (como en flow-ai-studio): se recuerda y responde a Cmd/Ctrl + B
+  const collapseBtn = $('#collapse-btn');
+  const isDesktop = () => window.matchMedia('(min-width: 1025px)').matches;
+  function setCollapsed(v) {
+    shell.classList.toggle('is-collapsed', v);
+    const label = v ? 'Mostrar menú' : 'Ocultar menú';
+    collapseBtn.setAttribute('aria-label', label);
+    collapseBtn.setAttribute('title', `${label} (Cmd + B)`);
+    collapseBtn.setAttribute('aria-expanded', String(!v));
+    safe(() => localStorage.setItem('miiles_sellers_sidebar', v ? 'collapsed' : 'expanded'));
+  }
+  setCollapsed(safe(() => localStorage.getItem('miiles_sellers_sidebar') === 'collapsed', false));
+  collapseBtn.addEventListener('click', () => setCollapsed(!shell.classList.contains('is-collapsed')));
+  document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() !== 'b' || !(e.metaKey || e.ctrlKey) || app.hidden) return;
+    e.preventDefault();
+    if (isDesktop()) setCollapsed(!shell.classList.contains('is-collapsed'));
+    else shell.classList.contains('menu-open') ? closeMenu() : openMenu();
+  });
 
   const navLinks = $$('#sb-nav a');
   const sections = navLinks.map((a) => document.getElementById(a.dataset.target));
