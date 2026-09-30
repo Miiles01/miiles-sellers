@@ -358,25 +358,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round
 .sb-logo { height: 20px; width: auto; }
 .sb-kicker { padding: 8px 32px 0; font-size: 13px; font-weight: 300; color: var(--ink-muted); }
 
-.sb-action {
-  margin: 28px 24px 28px;
-  height: 48px;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: var(--black);
-  color: var(--white);
-  font-size: 14px;
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: transform var(--duration-fast) var(--ease-smooth-out);
-}
-.sb-action:hover { transform: scale(1.02); }
-.sb-action svg { width: 16px; height: 16px; stroke-width: 2; }
 
-.sb-nav { list-style: none; padding: 0 24px; display: flex; flex-direction: column; gap: 4px; }
+.sb-nav { list-style: none; padding: 0 24px; margin-top: 28px; display: flex; flex-direction: column; gap: 4px; }
 .sb-nav a {
   display: flex;
   align-items: center;
@@ -398,21 +381,6 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round
 
 .sb-spacer { flex: 1; min-height: 24px; }
 
-.sb-card {
-  margin: 0 24px 12px;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-radius: 20px;
-  background: var(--white);
-  border: 1px solid var(--line-soft);
-  box-shadow: var(--shadow-sm);
-}
-.sb-card-ic { width: 36px; height: 36px; border-radius: 50%; background: #f4f4f5; display: grid; place-items: center; flex-shrink: 0; }
-.sb-card-ic svg { width: 17px; height: 17px; stroke-width: 1.7; }
-.sb-card b { display: block; font-size: 13px; font-weight: 400; }
-.sb-card small { display: block; font-size: 11px; font-weight: 300; color: var(--ink-muted); margin-top: 2px; line-height: 1.35; }
 
 .sb-me { margin: 12px 24px 0; padding: 8px; display: flex; align-items: center; gap: 12px; }
 .avatar {
