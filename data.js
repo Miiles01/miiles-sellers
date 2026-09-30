@@ -71,12 +71,6 @@ window.SELLERS = {
     { titulo: 'Qué cuenta como venta', texto: null },
   ],
 
-  proceso: [
-    { titulo: 'Detecta el dolor', texto: '¿Se ve genérico, no convierte sus redes en clientes o pierde pacientes por no contestar? Escucha primero y ubica el servicio.' },
-    { titulo: 'Comparte el resumen', texto: 'Copia el resumen del servicio desde este portal y mándalo por WhatsApp. Ya incluye precio e IVA.' },
-    { titulo: 'Aclara la factura', texto: 'Los precios son netos. Si el cliente pide factura, se suma 16% de IVA.' },
-    { titulo: 'Cierra y avisa', texto: 'Cuando el cliente pague, avisa al equipo para registrar la venta a tu nombre.' },
-  ],
 
   objeciones: [
     {

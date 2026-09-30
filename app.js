@@ -245,14 +245,6 @@
       </div>`).join('');
   }
 
-  function renderSteps() {
-    $('#steps').innerHTML = D.proceso.map((s, i) => `
-      <li class="step">
-        <span class="step-num">${i + 1}</span>
-        <h3>${esc(s.titulo)}</h3>
-        <p>${esc(s.texto)}</p>
-      </li>`).join('');
-  }
 
   function renderFaq() {
     $('#faq').innerHTML = D.objeciones.map((o) => accordion(o.pregunta, esc(o.respuesta))).join('');
@@ -411,7 +403,6 @@
   renderStats();
   renderServices();
   renderRules();
-  renderSteps();
   renderFaq();
   setupCategories();
   renderCalc();
