@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <title>Miiles · Vendedores</title>
+  <link rel="icon" type="image/png" href="assets/estrella-degradado.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Acceso con PIN -->
+  <main class="lock" id="lock">
+    <div class="lock-card">
+      <img class="lock-logo" src="assets/logotipo.svg" alt="Miiles">
+      <img class="lock-star" src="assets/estrella-degradado.png" alt="" width="48" height="48">
+      <h1 class="lock-title">Portal de <em class="accent">vendedores</em></h1>
+      <p class="lock-sub">Ingresa tu PIN de 4 dígitos</p>
+
+      <form class="t-input-wrap" id="pin-form" autocomplete="off" novalidate>
+        <div class="t-input pin-row">
+          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 1" autofocus>
+          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 2">
+          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 3">
+          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 4">
+        </div>
+        <p class="t-error-msg pin-error" role="alert">PIN incorrecto. Intenta de nuevo.</p>
+      </form>
+    </div>
+  </main>
+
+  <!-- Panel -->
+  <div class="app" id="app" hidden>
+    <header class="nav">
+      <div class="nav-inner">
+        <img class="nav-logo" src="assets/logotipo.svg" alt="Miiles">
+        <div class="nav-tabs-scroll">
+          <nav class="t-tabs" id="section-tabs" role="tablist" aria-label="Secciones">
+            <span class="t-tabs-pill" aria-hidden="true"></span>
+            <button class="t-tab" role="tab" aria-selected="true" data-target="productos">Productos</button>
+            <button class="t-tab" role="tab" aria-selected="false" data-target="comisiones">Comisiones</button>
+            <button class="t-tab" role="tab" aria-selected="false" data-target="beneficios">Beneficios</button>
+            <button class="t-tab" role="tab" aria-selected="false" data-target="como-vender">Cómo vender</button>
+            <button class="t-tab" role="tab" aria-selected="false" data-target="objeciones">Objeciones</button>
+          </nav>
+        </div>
+        <button class="btn-ghost" id="logout" type="button">Salir</button>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero t-stagger" id="hero">
+        <img class="hero-star t-stagger-line t-stagger-line--1" src="assets/estrella-degradado.png" alt="" width="48" height="48">
+        <p class="hero-hello t-stagger-line t-stagger-line--2">Hola, equipo</p>
+        <h1 class="display t-stagger-line t-stagger-line--3">Todo lo que necesitas para <em class="accent">vender</em></h1>
+        <p class="body-lg t-stagger-line t-stagger-line--4">Productos, precios, comisiones y argumentos de Miiles en un solo lugar.</p>
+      </section>
+
+      <section class="section" id="productos">
+        <h2 class="h2">Nuestros <em class="accent">productos</em></h2>
+        <p class="section-sub">Lo que vende Miiles, cuánto cuesta y cuánto ganas por cada venta.</p>
+        <div class="product-grid" id="product-grid"></div>
+      </section>
+
+      <section class="section" id="comisiones">
+        <h2 class="h2">Tus <em class="accent">comisiones</em></h2>
+        <p class="section-sub">Calcula cuánto ganas por una venta y revisa cómo se pagan.</p>
+
+        <div class="calc">
+          <div class="calc-form">
+            <p class="label">Producto</p>
+            <div class="calc-tabs-scroll">
+              <div class="t-tabs t-tabs--soft" id="calc-tabs" role="tablist" aria-label="Producto"></div>
+            </div>
+            <label class="label" for="calc-amount">Monto de la venta</label>
+            <div class="money-field">
+              <span aria-hidden="true">$</span>
+              <input id="calc-amount" type="text" inputmode="numeric" placeholder="0">
+              <span aria-hidden="true">MXN</span>
+            </div>
+            <p class="caption" id="calc-rate"></p>
+          </div>
+          <div class="calc-result" aria-live="polite">
+            <p class="calc-result-label">Tu comisión</p>
+            <p class="calc-result-value"><span class="t-digit-group" id="calc-value"></span></p>
+          </div>
+        </div>
+
+        <div class="rules" id="rules"></div>
+      </section>
+
+      <section class="section" id="beneficios">
+        <h2 class="h2">Por qué <em class="accent">Miiles</em></h2>
+        <p class="section-sub">Los argumentos que más convencen al cliente.</p>
+        <div class="benefit-grid" id="benefit-grid"></div>
+      </section>
+
+      <section class="section" id="como-vender">
+        <h2 class="h2">Cómo <em class="accent">vender</em></h2>
+        <p class="section-sub">El proceso de principio a fin, en cuatro pasos.</p>
+        <ol class="steps" id="steps"></ol>
+
+        <div class="resources" id="resources"></div>
+      </section>
+
+      <section class="section" id="objeciones">
+        <h2 class="h2">Respuestas a <em class="accent">objeciones</em></h2>
+        <p class="section-sub">Lo que dicen los clientes y cómo contestar.</p>
+        <div class="faq" id="faq"></div>
+      </section>
+
+      <footer class="footer">
+        <img src="assets/estrella-degradado.png" alt="" width="24" height="24">
+        <p class="caption">Portal interno de Miiles para el equipo de ventas.</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="t-toast toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>
+    <span id="toast-text">Link copiado</span>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

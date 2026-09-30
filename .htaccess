@@ -1,0 +1,7 @@
+# Portal interno: que no aparezca en buscadores
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+DirectoryIndex index.html
+Options -Indexes
