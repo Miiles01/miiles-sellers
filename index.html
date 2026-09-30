@@ -19,111 +19,174 @@
     <div class="lock-card">
       <img class="lock-logo" src="assets/logotipo.svg" alt="Miiles">
       <img class="lock-star" src="assets/estrella-degradado.png" alt="" width="48" height="48">
-      <h1 class="lock-title">Portal de <em class="accent">vendedores</em></h1>
-      <p class="lock-sub">Ingresa tu PIN de 4 dígitos</p>
 
-      <form class="t-input-wrap" id="pin-form" autocomplete="off" novalidate>
-        <div class="t-input pin-row">
-          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 1" autofocus>
-          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 2">
-          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 3">
-          <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 4">
-        </div>
-        <p class="t-error-msg pin-error" role="alert">PIN incorrecto. Intenta de nuevo.</p>
+      <div class="lock-step" id="step-pin">
+        <h1 class="lock-title">Portal de <em class="accent">vendedores</em></h1>
+        <p class="lock-sub">Ingresa tu PIN de 4 dígitos</p>
+        <form class="t-input-wrap" id="pin-form" autocomplete="off" novalidate>
+          <div class="t-input pin-row">
+            <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 1" autofocus>
+            <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 2">
+            <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 3">
+            <input class="pin-box" type="password" inputmode="numeric" autocomplete="one-time-code" aria-label="Dígito 4">
+          </div>
+          <p class="t-error-msg pin-error" role="alert">PIN incorrecto. Intenta de nuevo.</p>
+        </form>
+      </div>
+
+      <form class="lock-step" id="step-name" hidden>
+        <h1 class="lock-title">¿Cómo te <em class="accent">llamas?</em></h1>
+        <p class="lock-sub">Para saludarte cada vez que entres</p>
+        <input class="name-input" id="name-input" type="text" autocomplete="given-name" placeholder="Tu nombre" maxlength="40">
+        <button class="btn btn-block" type="submit">Entrar <img src="assets/flecha-blanco.svg" alt=""></button>
+        <button class="link-btn" type="button" id="skip-name">Omitir</button>
       </form>
     </div>
   </main>
 
   <!-- Panel -->
-  <div class="app" id="app" hidden>
-    <header class="nav">
-      <div class="nav-inner">
-        <img class="nav-logo" src="assets/logotipo.svg" alt="Miiles">
-        <div class="nav-tabs-scroll">
-          <nav class="t-tabs" id="section-tabs" role="tablist" aria-label="Secciones">
-            <span class="t-tabs-pill" aria-hidden="true"></span>
-            <button class="t-tab" role="tab" aria-selected="true" data-target="productos">Productos</button>
-            <button class="t-tab" role="tab" aria-selected="false" data-target="comisiones">Comisiones</button>
-            <button class="t-tab" role="tab" aria-selected="false" data-target="beneficios">Beneficios</button>
-            <button class="t-tab" role="tab" aria-selected="false" data-target="como-vender">Cómo vender</button>
-            <button class="t-tab" role="tab" aria-selected="false" data-target="objeciones">Objeciones</button>
-          </nav>
+  <div class="shell" id="app" hidden>
+    <div class="scrim" id="scrim"></div>
+
+    <aside class="sidebar" id="sidebar" aria-label="Menú">
+      <div class="sidebar-inner">
+        <div class="sb-top">
+          <img class="sb-star" src="assets/estrella-degradado.png" alt="">
+          <img class="sb-logo" src="assets/logotipo.svg" alt="Miiles">
         </div>
-        <button class="btn-ghost" id="logout" type="button">Salir</button>
+        <p class="sb-kicker">Portal de vendedores</p>
+
+        <button class="sb-action" type="button" data-goto="comisiones">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Calcular mis ganancias
+        </button>
+
+        <nav>
+          <ul class="sb-nav" id="sb-nav">
+            <li><a href="#inicio" data-target="inicio" aria-current="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</a></li>
+            <li><a href="#servicios" data-target="servicios">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Servicios</a></li>
+            <li><a href="#comisiones" data-target="comisiones">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.4 0-2.6-.6-3-1.6M12 6.5V8m0 8v1.5"/></svg>Comisiones</a></li>
+            <li><a href="#como-vender" data-target="como-vender">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M4 15l4-4 4 3 7-7"/><path d="M15 7h4v4"/></svg>Cómo vender</a></li>
+            <li><a href="#objeciones" data-target="objeciones">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>Objeciones</a></li>
+          </ul>
+        </nav>
+
+        <div class="sb-spacer"></div>
+
+        <div class="sb-card">
+          <span class="sb-card-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+          <span>
+            <b>Precios netos</b>
+            <small>Con factura se suma 16% de IVA</small>
+          </span>
+        </div>
+
+        <div class="sb-me">
+          <span class="avatar" id="avatar">M</span>
+          <span class="sb-me-text">
+            <b id="me-name">Equipo</b>
+            <small>Vendedor</small>
+          </span>
+          <button class="icon-btn icon-btn--sm" id="logout" type="button" aria-label="Salir" title="Salir">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          </button>
+        </div>
       </div>
-    </header>
+    </aside>
 
-    <main class="page">
-      <section class="hero t-stagger" id="hero">
-        <img class="hero-star t-stagger-line t-stagger-line--1" src="assets/estrella-degradado.png" alt="" width="48" height="48">
-        <p class="hero-hello t-stagger-line t-stagger-line--2">Hola, equipo</p>
-        <h1 class="display t-stagger-line t-stagger-line--3">Todo lo que necesitas para <em class="accent">vender</em></h1>
-        <p class="body-lg t-stagger-line t-stagger-line--4">Productos, precios, comisiones y argumentos de Miiles en un solo lugar.</p>
-      </section>
+    <div class="content-col">
+      <header class="mobile-bar">
+        <button class="icon-btn" id="menu-btn" type="button" aria-label="Abrir menú" aria-controls="sidebar" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+        </button>
+        <img src="assets/logotipo.svg" alt="Miiles" class="mobile-logo">
+      </header>
 
-      <section class="section" id="productos">
-        <h2 class="h2">Nuestros <em class="accent">productos</em></h2>
-        <p class="section-sub">Lo que vende Miiles, cuánto cuesta y cuánto ganas por cada venta.</p>
-        <div class="product-grid" id="product-grid"></div>
-      </section>
-
-      <section class="section" id="comisiones">
-        <h2 class="h2">Tus <em class="accent">comisiones</em></h2>
-        <p class="section-sub">Calcula cuánto ganas por una venta y revisa cómo se pagan.</p>
-
-        <div class="calc">
-          <div class="calc-form">
-            <p class="label">Producto</p>
-            <div class="calc-tabs-scroll">
-              <div class="t-tabs t-tabs--soft" id="calc-tabs" role="tablist" aria-label="Producto"></div>
-            </div>
-            <label class="label" for="calc-amount">Monto de la venta</label>
-            <div class="money-field">
-              <span aria-hidden="true">$</span>
-              <input id="calc-amount" type="text" inputmode="numeric" placeholder="0">
-              <span aria-hidden="true">MXN</span>
-            </div>
-            <p class="caption" id="calc-rate"></p>
+      <main class="content">
+        <!-- Saludo -->
+        <section class="section section--first" id="inicio">
+          <div class="t-stagger" id="greeting">
+            <h1 class="greet t-stagger-line t-stagger-line--1"><span id="greet-time">Hola</span>,<br><strong id="greet-name">equipo</strong></h1>
+            <p class="greet-sub t-stagger-line t-stagger-line--2">¿Qué vamos a vender hoy?</p>
           </div>
-          <div class="calc-result" aria-live="polite">
-            <p class="calc-result-label">Tu comisión</p>
-            <p class="calc-result-value"><span class="t-digit-group" id="calc-value"></span></p>
+          <div class="stats" id="stats"></div>
+        </section>
+
+        <!-- Servicios -->
+        <section class="section" id="servicios">
+          <div class="section-head">
+            <div>
+              <h2 class="h2">Servicios</h2>
+              <p class="section-sub">Lo que vende Miiles, cuánto cuesta y cuánto ganas por cada venta.</p>
+            </div>
+            <div class="t-tabs pills" id="cat-tabs" role="tablist" aria-label="Filtrar servicios"></div>
           </div>
-        </div>
 
-        <div class="rules" id="rules"></div>
-      </section>
+          <div class="dot-panel">
+            <div class="dots" aria-hidden="true"></div>
+            <div class="service-row" id="service-row"></div>
+          </div>
+        </section>
 
-      <section class="section" id="beneficios">
-        <h2 class="h2">Por qué <em class="accent">Miiles</em></h2>
-        <p class="section-sub">Los argumentos que más convencen al cliente.</p>
-        <div class="benefit-grid" id="benefit-grid"></div>
-      </section>
+        <!-- Comisiones -->
+        <section class="section" id="comisiones">
+          <div class="section-head">
+            <div>
+              <h2 class="h2">Tus comisiones</h2>
+              <p class="section-sub">Suma tus ventas del mes y mira cuánto ganas.</p>
+            </div>
+          </div>
 
-      <section class="section" id="como-vender">
-        <h2 class="h2">Cómo <em class="accent">vender</em></h2>
-        <p class="section-sub">El proceso de principio a fin, en cuatro pasos.</p>
-        <ol class="steps" id="steps"></ol>
+          <div class="calc">
+            <div class="calc-list" id="calc-list"></div>
+            <div class="calc-result" aria-live="polite">
+              <p class="calc-result-label">Ganas este mes</p>
+              <p class="calc-result-value"><span class="t-digit-group" id="calc-value"></span></p>
+              <p class="calc-result-note" id="calc-note">Agrega tus ventas con los botones +</p>
+            </div>
+          </div>
 
-        <div class="resources" id="resources"></div>
-      </section>
+          <div class="rules" id="rules"></div>
+        </section>
 
-      <section class="section" id="objeciones">
-        <h2 class="h2">Respuestas a <em class="accent">objeciones</em></h2>
-        <p class="section-sub">Lo que dicen los clientes y cómo contestar.</p>
-        <div class="faq" id="faq"></div>
-      </section>
+        <!-- Cómo vender -->
+        <section class="section" id="como-vender">
+          <div class="section-head">
+            <div>
+              <h2 class="h2">Cómo vender</h2>
+              <p class="section-sub">El proceso de principio a fin, en cuatro pasos.</p>
+            </div>
+          </div>
+          <ol class="steps" id="steps"></ol>
+        </section>
 
-      <footer class="footer">
-        <img src="assets/estrella-degradado.png" alt="" width="24" height="24">
-        <p class="caption">Portal interno de Miiles para el equipo de ventas.</p>
-      </footer>
-    </main>
+        <!-- Objeciones -->
+        <section class="section" id="objeciones">
+          <div class="section-head">
+            <div>
+              <h2 class="h2">Respuestas a objeciones</h2>
+              <p class="section-sub">Lo que dicen los clientes y cómo contestar.</p>
+            </div>
+          </div>
+          <div class="acc-group faq" id="faq"></div>
+        </section>
+
+        <footer class="footer">
+          <img src="assets/estrella-degradado.png" alt="" width="20" height="20">
+          <p>Portal interno de Miiles para el equipo de ventas.</p>
+        </footer>
+      </main>
+    </div>
   </div>
 
   <div class="t-toast toast" id="toast" role="status" aria-live="polite">
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>
-    <span id="toast-text">Link copiado</span>
+    <span id="toast-text">Copiado</span>
   </div>
 
   <script src="data.js"></script>

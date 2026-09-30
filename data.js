@@ -1,126 +1,103 @@
 /*
  * Contenido del portal de vendedores.
- * Edita solo este archivo para cambiar productos, precios, comisiones y textos.
- * - precio: número en pesos (MXN) o null → se muestra "Por definir".
- * - comision: porcentaje (10 = 10%) o null → se muestra "Por definir".
+ * Edita solo este archivo para cambiar servicios, precios, comisiones y textos.
+ * - precio y comision: números en pesos (MXN), sin IVA.
+ * - periodo: null (pago único) o 'mes' (mensualidad).
  */
 window.SELLERS = {
   pin: '6464',
+  iva: 0.16,
 
-  // Dominio donde viven los briefs que el vendedor comparte con el cliente.
-  sitio: 'https://wearemiiles.com',
+  categorias: [
+    { id: 'genericos', nombre: 'Genéricos', descripcion: 'Para cualquier tipo de negocio' },
+    { id: 'clinicas', nombre: 'Clínicas', descripcion: 'Nicho especializado' },
+  ],
 
-  productos: [
+  servicios: [
     {
-      id: 'branding',
-      nombre: 'Identidad de marca',
+      id: 'marca-agente',
+      categoria: 'genericos',
+      nombre: 'Creación de Marca + Agente Diseñador IA',
       icono: 'assets/flor-azul.svg',
-      resumen: 'Define a quién le habla la marca, qué problema resuelve y cómo diferenciarse de forma consistente en diseño, comunicación y estrategia.',
-      precio: null,
-      comision: null,
-      entrega: null,
-      idealPara: 'Marcas nuevas o que ya venden pero se ven genéricas y necesitan diferenciarse.',
+      descripcion: 'Identidad de marca completa + un agente de IA personalizado que trabaja 24/7 generando diseños para redes sociales con la línea gráfica de la marca.',
+      precio: 2000,
+      periodo: null,
+      comision: 1000,
+      comisionNota: '50% del precio',
       incluye: [
-        'Estrategia de marca: público, propuesta de valor y diferenciador',
-        'Logotipo y sistema visual',
-        'Paleta de color y tipografías',
-        'Tono de voz y mensajes clave',
+        'Diseño de identidad de marca completo',
+        'Agente de IA configurado con la línea gráfica de la marca',
+        'Diseños para redes sociales generados 24/7',
       ],
-      brief: '/brief/branding',
     },
     {
-      id: 'web',
-      nombre: 'Diseño Web & Digital',
+      id: 'embudo-agente',
+      categoria: 'genericos',
+      nombre: 'Embudo Comercial + Agente IA',
       icono: 'assets/flecha-azul.svg',
-      resumen: 'Landing pages de alto impacto, plataformas web y experiencias interactivas optimizadas para convertir visitas en clientes.',
-      precio: null,
-      comision: null,
-      entrega: null,
-      idealPara: 'Negocios que necesitan vender en línea o que tienen un sitio que no convierte.',
+      descripcion: 'Infraestructura digital (sitio web, catálogo o página de aterrizaje) + un agente de IA que construye activos y automatizaciones para convertir el tráfico de redes e internet en clientes.',
+      precio: 2000,
+      periodo: null,
+      comision: 1000,
+      comisionNota: '50% del precio',
       incluye: [
-        'Estructura y textos pensados para vender',
-        'Diseño responsivo para celular, tablet y escritorio',
-        'Animaciones y microinteracciones',
-        'Publicación en su dominio',
+        'Sitio web, catálogo o página de aterrizaje',
+        'Agente o sistema de IA para crear activos digitales',
+        'Automatizaciones para capturar tráfico de redes sociales e internet',
       ],
-      brief: '/brief/web-design',
     },
     {
-      id: 'contenido',
-      nombre: 'Estrategia & Contenido',
-      icono: 'assets/miiles-azul.svg',
-      resumen: 'Campañas visuales, assets publicitarios y contenido que impulsa el crecimiento de la marca en redes.',
-      precio: null,
-      comision: null,
-      entrega: null,
-      idealPara: 'Marcas con identidad definida que necesitan publicar constante y con intención.',
+      id: 'clinicas-agenda',
+      categoria: 'clinicas',
+      nombre: 'Automatización y Agendamiento para Consultorios',
+      icono: 'assets/estrella-azul.svg',
+      descripcion: 'Portal web y sistema automatizado para que los pacientes agenden solos, 24/7.',
+      precio: 500,
+      periodo: 'mes',
+      comision: 500,
+      comisionNota: '100% del primer mes',
+      clienteIdeal: 'Micro-clínicas o consultorios de 1 a 2 personas: médicos independientes o con un solo asistente.',
+      dolor: 'Agenda desorganizada, sin tiempo en consulta para contestar mensajes y pacientes perdidos por no responder a tiempo.',
       incluye: [
-        'Estrategia de contenido por objetivos',
-        'Diseño de publicaciones y campañas',
-        'Assets para anuncios',
-        'Calendario de publicación',
+        'Portal web del consultorio',
+        'Agenda automática: el paciente reserva solo, 24/7',
       ],
-      brief: '/brief/growth',
     },
   ],
 
   comisiones: [
-    { titulo: 'Cómo se calcula', texto: null },
+    { titulo: 'Cómo se calcula', texto: 'Un monto fijo por venta cerrada: $1,000 en servicios genéricos y el primer mes completo ($500) en Clínicas. El IVA no cambia tu comisión.' },
     { titulo: 'Cuándo se paga', texto: null },
     { titulo: 'Qué cuenta como venta', texto: null },
   ],
 
-  beneficios: [
-    {
-      icono: 'assets/miiles-azul.svg',
-      titulo: 'Todo en un solo equipo',
-      texto: 'Marca, web y contenido con el mismo equipo creativo. El cliente no tiene que coordinar a tres proveedores.',
-    },
-    {
-      icono: 'assets/estrella-azul.svg',
-      titulo: 'Brief interactivo en 4 minutos',
-      texto: 'El cliente responde un brief guiado desde su celular. Sin llamadas largas para arrancar.',
-    },
-    {
-      icono: 'assets/flor-azul.svg',
-      titulo: 'Propuesta personalizada',
-      texto: 'Con el brief, Miiles diseña una propuesta visual y estratégica hecha para los objetivos del cliente.',
-    },
-    {
-      icono: 'assets/sonrisa-azul.svg',
-      titulo: 'Portafolio que respalda',
-      texto: 'Proyectos reales en wearemiiles.com/trabajo para que el cliente vea el nivel antes de decidir.',
-    },
-  ],
-
   proceso: [
-    { titulo: 'Detecta la necesidad', texto: '¿Le falta marca, un sitio que venda o contenido constante? Escucha primero y ubica el producto.' },
-    { titulo: 'Comparte el brief', texto: 'Copia el link del brief del producto y envíaselo al cliente. Le toma unos 4 minutos.' },
-    { titulo: 'Miiles prepara la propuesta', texto: 'El equipo revisa el brief y arma una propuesta visual y estratégica personalizada.' },
-    { titulo: 'Cierra y avisa', texto: 'Cuando el cliente acepte, avisa al equipo para registrar la venta a tu nombre.' },
+    { titulo: 'Detecta el dolor', texto: '¿Se ve genérico, no convierte sus redes en clientes o pierde pacientes por no contestar? Escucha primero y ubica el servicio.' },
+    { titulo: 'Comparte el resumen', texto: 'Copia el resumen del servicio desde este portal y mándalo por WhatsApp. Ya incluye precio e IVA.' },
+    { titulo: 'Aclara la factura', texto: 'Los precios son netos. Si el cliente pide factura, se suma 16% de IVA.' },
+    { titulo: 'Cierra y avisa', texto: 'Cuando el cliente pague, avisa al equipo para registrar la venta a tu nombre.' },
   ],
 
   objeciones: [
     {
       pregunta: '"Está muy caro"',
-      respuesta: 'Regresa al problema: ¿cuánto le cuesta hoy verse genérico o tener un sitio que no vende? Muestra el portafolio y explica que es una inversión que se usa por años.',
+      respuesta: 'Compáralo: una marca completa más un agente que diseña todos los días cuesta $2,000 una sola vez, menos que un mes de un diseñador. En clínicas son $500 al mes, menos que un paciente perdido.',
     },
     {
-      pregunta: '"Ya tengo diseñador"',
-      respuesta: 'Miiles no reemplaza a nadie: da estrategia, sistema de marca y ejecución en un solo equipo. Su diseñador puede trabajar después con el sistema que entreguemos.',
+      pregunta: '"Ya tengo diseñador" o "ya tengo página"',
+      respuesta: 'El agente de IA no reemplaza a nadie: produce todos los días con su línea gráfica y deja libre a su equipo para lo importante. Si su página no le trae clientes, el embudo es justo lo que le falta.',
     },
     {
-      pregunta: '"No tengo tiempo para esto"',
-      respuesta: 'El brief toma 4 minutos desde el celular. Con eso el equipo arranca la propuesta sin juntas largas.',
+      pregunta: '"No sé usar inteligencia artificial"',
+      respuesta: 'No tiene que saber: lo dejamos configurado y trabaja solo. El cliente solo revisa y publica.',
+    },
+    {
+      pregunta: '"Mis pacientes prefieren llamar"',
+      respuesta: 'Pueden seguir llamando. El sistema atiende a los que escriben fuera de horario o mientras el médico está en consulta, que son los que hoy se pierden.',
     },
     {
       pregunta: '"Lo voy a pensar"',
-      respuesta: 'Propón que llene el brief sin compromiso: recibe una propuesta personalizada y decide con algo concreto en la mano.',
+      respuesta: 'Pregunta qué le hace dudar y responde eso. En clínicas, recuérdale que el pago es mensual: arranca con $500 y ve resultados desde el primer mes.',
     },
-  ],
-
-  recursos: [
-    { titulo: 'Portafolio', texto: 'Proyectos reales para mostrar el nivel de Miiles.', ruta: '/trabajo' },
-    { titulo: 'Catálogo de briefs', texto: 'La página donde el cliente elige qué brief llenar.', ruta: '/' },
   ],
 };

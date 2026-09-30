@@ -9,18 +9,27 @@
   };
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const money = (n) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(n);
-  const TBD = 'Por definir';
+  const withIva = (n) => Math.round(n * (1 + D.iva));
+  const ivaPct = Math.round(D.iva * 100);
   const has = (v) => v !== null && v !== undefined && v !== '';
 
-  const CHECK = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>';
-  const CHEVRON = '<span class="t-acc-chevron"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.5L8 10.5L12 6.5"/></svg></span>';
-  const COPY = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
+  const ICON = {
+    check: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>',
+    chevron: '<span class="t-acc-chevron"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.5L8 10.5L12 6.5"/></svg></span>',
+    copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+    minus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>',
+  };
 
-  // ---------------- Sesión ----------------
-  const KEY = 'miiles_sellers_ok';
-  const store = {
-    get() { try { return sessionStorage.getItem(KEY) === '1'; } catch { return false; } },
-    set(v) { try { v ? sessionStorage.setItem(KEY, '1') : sessionStorage.removeItem(KEY); } catch {} },
+  // ---------------- Almacenamiento (sesión + nombre) ----------------
+  const safe = (fn, fb) => { try { return fn(); } catch { return fb; } };
+  const session = {
+    get: () => safe(() => sessionStorage.getItem('miiles_sellers_ok') === '1', false),
+    set: (v) => safe(() => (v ? sessionStorage.setItem('miiles_sellers_ok', '1') : sessionStorage.removeItem('miiles_sellers_ok'))),
+  };
+  const nameStore = {
+    get: () => safe(() => localStorage.getItem('miiles_sellers_name') || '', ''),
+    set: (v) => safe(() => localStorage.setItem('miiles_sellers_name', v)),
   };
 
   // ---------------- PIN ----------------
@@ -54,8 +63,9 @@
     const code = boxes.map((b) => b.value).join('');
     if (code.length < boxes.length) return;
     if (code === D.pin) {
-      store.set(true);
-      unlock();
+      session.set(true);
+      if (nameStore.get()) unlock();
+      else askName();
     } else {
       showError();
       boxes.forEach((b) => (b.value = ''));
@@ -93,17 +103,36 @@
   });
   wrap.addEventListener('submit', (e) => e.preventDefault());
 
+  // Paso 2: nombre para el saludo
+  const stepPin = $('#step-pin');
+  const stepName = $('#step-name');
+  function askName() {
+    stepPin.hidden = true;
+    stepName.hidden = false;
+    $('#name-input').focus();
+  }
+  stepName.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = $('#name-input').value.trim().split(/\s+/)[0] || '';
+    if (v) nameStore.set(v.charAt(0).toUpperCase() + v.slice(1));
+    unlock();
+  });
+  $('#skip-name').addEventListener('click', unlock);
+
   $('#logout').addEventListener('click', () => {
-    store.set(false);
+    session.set(false);
+    closeMenu();
     app.hidden = true;
     lock.hidden = false;
-    $('#hero').classList.remove('is-shown');
+    stepName.hidden = true;
+    stepPin.hidden = false;
+    $('#greeting').classList.remove('is-shown');
     boxes.forEach((b) => (b.value = ''));
     window.scrollTo(0, 0);
     boxes[0].focus();
   });
 
-  // ---------------- Toast ----------------
+  // ---------------- Toast + copiar ----------------
   const toast = $('#toast');
   let toastTimer;
   function showToast(text) {
@@ -112,7 +141,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove('is-open'), 2200);
   }
-  async function copy(text) {
+  async function copy(text, msg) {
     try {
       await navigator.clipboard.writeText(text);
     } catch {
@@ -125,87 +154,111 @@
       document.execCommand('copy');
       t.remove();
     }
-    showToast('Link copiado');
+    showToast(msg);
   }
-  const url = (ruta) => D.sitio.replace(/\/$/, '') + ruta;
+
+  // ---------------- Saludo ----------------
+  function greeting() {
+    const h = new Date().getHours();
+    return h < 12 ? 'Buenos días' : h < 18 ? 'Buenas tardes' : 'Buenas noches';
+  }
+  function renderGreeting() {
+    const name = nameStore.get();
+    $('#greet-time').textContent = greeting();
+    $('#greet-name').textContent = name || 'equipo';
+    $('#me-name').textContent = name || 'Equipo';
+    $('#avatar').textContent = (name || 'M').charAt(0).toUpperCase();
+  }
 
   // ---------------- Render ----------------
+  const periodo = (s) => (s.periodo === 'mes' ? ' / mes' : '');
+  const catName = (id) => (D.categorias.find((c) => c.id === id) || {}).nombre || '';
+
+  function renderStats() {
+    const maxCom = Math.max(...D.servicios.map((s) => s.comision));
+    const stats = [
+      { icon: 'assets/miiles-azul.svg', num: D.servicios.length, lbl: 'Servicios para vender' },
+      { icon: 'assets/estrella-azul.svg', num: money(maxCom), lbl: 'Comisión máxima por venta' },
+      { icon: 'assets/sonrisa-azul.svg', num: `+${ivaPct}%`, lbl: 'IVA solo si piden factura' },
+    ];
+    $('#stats').innerHTML = stats.map((s) => `
+      <div class="stat">
+        <span class="stat-tile"><img src="${s.icon}" alt=""></span>
+        <span class="stat-num">${esc(s.num)}</span>
+        <span class="stat-lbl">${esc(s.lbl)}</span>
+      </div>`).join('');
+  }
+
   function accordion(title, bodyHtml) {
     return `
       <div class="t-acc" data-open="false">
-        <button class="t-acc-head" type="button" aria-expanded="false">${esc(title)}${CHEVRON}</button>
+        <button class="t-acc-head" type="button" aria-expanded="false">${esc(title)}${ICON.chevron}</button>
         <div class="t-acc-panel"><div class="t-acc-panel-inner"><div>${bodyHtml}</div></div></div>
       </div>`;
   }
 
-  function renderProducts() {
-    $('#product-grid').innerHTML = D.productos.map((p) => `
-      <article class="card product">
-        <div class="icon-bubble"><img src="${esc(p.icono)}" alt=""></div>
-        <h3 class="h3">${esc(p.nombre)}</h3>
-        <p class="product-desc">${esc(p.resumen)}</p>
-        <div class="price">
-          <p class="price-label">Precio desde</p>
-          ${has(p.precio)
-            ? `<p class="price-value">${money(p.precio)}<small>MXN</small></p>`
-            : `<p class="tbd">${TBD}</p>`}
+  function summary(s) {
+    const lines = [
+      `*${s.nombre}*`,
+      s.descripcion,
+      '',
+      ...s.incluye.map((x) => `• ${x}`),
+      '',
+      `Precio: ${money(s.precio)} MXN${periodo(s)}`,
+      `Con factura: ${money(withIva(s.precio))} MXN${periodo(s)} (incluye ${ivaPct}% de IVA)`,
+    ];
+    return lines.join('\n');
+  }
+
+  function renderServices() {
+    $('#service-row').innerHTML = D.servicios.map((s) => `
+      <article class="service" data-cat="${esc(s.categoria)}">
+        <div class="service-top">
+          <span class="icon-bubble"><img src="${esc(s.icono)}" alt=""></span>
+          <span class="tag">${esc(catName(s.categoria))}</span>
         </div>
-        <div class="chips">
-          <span class="chip"><img src="assets/estrella-azul.svg" alt="">Comisión ${has(p.comision) ? esc(p.comision) + '%' : TBD.toLowerCase()}</span>
-          <span class="chip">Entrega ${has(p.entrega) ? esc(p.entrega) : TBD.toLowerCase()}</span>
+        <h3>${esc(s.nombre)}</h3>
+        <p class="service-desc">${esc(s.descripcion)}</p>
+        <div class="price-block">
+          <p class="price">${money(s.precio)}<small>MXN${periodo(s)}</small></p>
+          <p class="price-iva">${money(withIva(s.precio))} con IVA, si requiere factura</p>
         </div>
-        <p class="ideal"><strong>Ideal para:</strong> ${esc(p.idealPara)}</p>
-        <div class="acc-group">
-          ${accordion('Qué incluye', `<ul class="check-list">${p.incluye.map((x) => `<li>${CHECK}<span>${esc(x)}</span></li>`).join('')}</ul>`)}
+        <div class="earn"><span>Tu comisión</span><strong>${money(s.comision)}</strong></div>
+        <p class="earn-note">${esc(s.comisionNota)}</p>
+        ${has(s.clienteIdeal) || has(s.dolor) ? `
+          <div class="service-meta">
+            ${has(s.clienteIdeal) ? `<p><strong>Cliente ideal:</strong> ${esc(s.clienteIdeal)}</p>` : ''}
+            ${has(s.dolor) ? `<p><strong>Su dolor:</strong> ${esc(s.dolor)}</p>` : ''}
+          </div>` : ''}
+        ${accordion('Qué incluye', `<ul class="check-list">${s.incluye.map((x) => `<li>${ICON.check}<span>${esc(x)}</span></li>`).join('')}</ul>`)}
+        <div class="service-actions">
+          <button class="btn-soft" type="button" data-copy-service="${esc(s.id)}">${ICON.copy}Copiar para WhatsApp</button>
         </div>
-        <button class="btn" type="button" data-copy="${esc(url(p.brief))}">
-          Copiar link del brief <img src="assets/flecha-blanco.svg" alt="">
-        </button>
       </article>`).join('');
   }
 
   function renderRules() {
     $('#rules').innerHTML = D.comisiones.map((r) => `
-      <div class="card rule">
-        <h3 class="h3">${esc(r.titulo)}</h3>
-        <p>${has(r.texto) ? esc(r.texto) : TBD}</p>
-      </div>`).join('');
-  }
-
-  function renderBenefits() {
-    $('#benefit-grid').innerHTML = D.beneficios.map((b) => `
-      <div class="card benefit">
-        <div class="icon-bubble"><img src="${esc(b.icono)}" alt=""></div>
-        <h3 class="h3">${esc(b.titulo)}</h3>
-        <p>${esc(b.texto)}</p>
+      <div class="rule">
+        <h3>${esc(r.titulo)}</h3>
+        <p class="${has(r.texto) ? '' : 'tbd'}">${has(r.texto) ? esc(r.texto) : 'Por definir'}</p>
       </div>`).join('');
   }
 
   function renderSteps() {
     $('#steps').innerHTML = D.proceso.map((s, i) => `
-      <li class="card step">
+      <li class="step">
         <span class="step-num">${i + 1}</span>
-        <h3 class="h3">${esc(s.titulo)}</h3>
+        <h3>${esc(s.titulo)}</h3>
         <p>${esc(s.texto)}</p>
       </li>`).join('');
-    $('#resources').innerHTML = D.recursos.map((r) => `
-      <div class="card resource">
-        <div>
-          <h3 class="h3">${esc(r.titulo)}</h3>
-          <p>${esc(r.texto)}</p>
-        </div>
-        <div class="resource-actions">
-          <button class="icon-btn" type="button" data-copy="${esc(url(r.ruta))}" aria-label="Copiar link de ${esc(r.titulo)}">${COPY}</button>
-          <a class="icon-btn icon-btn--blue" href="${esc(url(r.ruta))}" target="_blank" rel="noopener" aria-label="Abrir ${esc(r.titulo)}"><img src="assets/flecha-blanco.svg" alt=""></a>
-        </div>
-      </div>`).join('');
   }
 
   function renderFaq() {
-    $('#faq').innerHTML = `<div class="acc-group">${D.objeciones.map((o) => accordion(o.pregunta, esc(o.respuesta))).join('')}</div>`;
+    $('#faq').innerHTML = D.objeciones.map((o) => accordion(o.pregunta, esc(o.respuesta))).join('');
   }
 
-  // ---------------- Accordion + copiar ----------------
+  // ---------------- Clicks: acordeón y copiar ----------------
   document.addEventListener('click', (e) => {
     const head = e.target.closest('.t-acc-head');
     if (head) {
@@ -215,8 +268,11 @@
       head.setAttribute('aria-expanded', String(!open));
       return;
     }
-    const copyBtn = e.target.closest('[data-copy]');
-    if (copyBtn) copy(copyBtn.dataset.copy);
+    const copyBtn = e.target.closest('[data-copy-service]');
+    if (copyBtn) {
+      const s = D.servicios.find((x) => x.id === copyBtn.dataset.copyService);
+      copy(summary(s), 'Resumen copiado');
+    }
   });
 
   // ---------------- Tabs sliding ----------------
@@ -237,44 +293,32 @@
         pill.style.width = `${tab.offsetWidth}px`;
       }
     }
-    function select(tab, animate = true) {
-      tabs.forEach((t) => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
-      moveTo(tab, animate);
-      // En móvil la barra se desplaza: mantén visible la pestaña activa
-      const scroller = bar.parentElement;
-      if (scroller.scrollWidth > scroller.clientWidth) {
-        scroller.scrollTo({ left: tab.offsetLeft - scroller.clientWidth / 2 + tab.offsetWidth / 2, behavior: animate ? 'smooth' : 'auto' });
-      }
-    }
-    tabs.forEach((tab) => tab.addEventListener('click', () => { select(tab); onSelect && onSelect(tab); }));
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
+        moveTo(tab, true);
+        onSelect(tab);
+      });
+    });
     window.addEventListener('resize', () => moveTo(active(), false));
-    return { tabs, select, snap: () => moveTo(active(), false) };
+    return { snap: () => moveTo(active(), false) };
   }
 
-  // Navegación por secciones + seguimiento del scroll
-  let navTabs;
-  let spyPausedUntil = 0;
-  function setupNav() {
-    navTabs = makeTabs($('#section-tabs'), (tab) => {
-      spyPausedUntil = Date.now() + 900;
-      document.getElementById(tab.dataset.target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  let catTabs;
+  function setupCategories() {
+    const bar = $('#cat-tabs');
+    const opts = [{ id: 'todos', nombre: 'Todos' }, ...D.categorias];
+    bar.innerHTML = '<span class="t-tabs-pill" aria-hidden="true"></span>' +
+      opts.map((c, i) => `<button class="t-tab" role="tab" type="button" aria-selected="${i === 0}" data-cat="${esc(c.id)}">${esc(c.nombre)}</button>`).join('');
+    catTabs = makeTabs(bar, (tab) => {
+      const cat = tab.dataset.cat;
+      $$('.service').forEach((card) => (card.hidden = cat !== 'todos' && card.dataset.cat !== cat));
+      $('#service-row').scrollTo({ left: 0 });
     });
-    const sections = navTabs.tabs.map((t) => document.getElementById(t.dataset.target));
-    const spy = () => {
-      if (Date.now() < spyPausedUntil || app.hidden) return;
-      let current = sections[0];
-      for (const s of sections) {
-        if (s.getBoundingClientRect().top <= window.innerHeight * 0.4) current = s;
-      }
-      const tab = navTabs.tabs.find((t) => t.dataset.target === current.id);
-      if (tab.getAttribute('aria-selected') !== 'true') navTabs.select(tab);
-    };
-    window.addEventListener('scroll', spy, { passive: true });
   }
 
   // ---------------- Calculadora ----------------
-  let calcProduct = D.productos[0];
-  const amount = $('#calc-amount');
+  const counts = Object.fromEntries(D.servicios.map((s) => [s.id, 0]));
   const valueEl = $('#calc-value');
 
   function setDigits(str) {
@@ -293,67 +337,98 @@
     valueEl.classList.add('is-animating');
   }
 
+  function renderCalc() {
+    $('#calc-list').innerHTML = D.servicios.map((s) => `
+      <div class="calc-item">
+        <div class="calc-item-text">
+          <b>${esc(s.nombre)}</b>
+          <small>${money(s.comision)} por venta · ${esc(s.comisionNota)}</small>
+        </div>
+        <div class="stepper">
+          <button type="button" data-step="-1" data-id="${esc(s.id)}" aria-label="Quitar una venta de ${esc(s.nombre)}" disabled>${ICON.minus}</button>
+          <output id="count-${esc(s.id)}">0</output>
+          <button type="button" class="plus" data-step="1" data-id="${esc(s.id)}" aria-label="Agregar una venta de ${esc(s.nombre)}">${ICON.plus}</button>
+        </div>
+      </div>`).join('');
+    $('#calc-list').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-step]');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      counts[id] = Math.max(0, Math.min(99, counts[id] + Number(btn.dataset.step)));
+      $(`#count-${id}`).textContent = counts[id];
+      btn.parentElement.querySelector('[data-step="-1"]').disabled = counts[id] === 0;
+      updateCalc();
+    });
+    updateCalc();
+  }
+
   let lastShown = '';
   function updateCalc() {
-    const raw = parseInt(amount.value.replace(/\D/g, ''), 10);
-    const n = Number.isFinite(raw) ? raw : 0;
-    amount.value = n ? new Intl.NumberFormat('es-MX').format(n) : '';
-    const rate = calcProduct.comision;
-    const box = valueEl.parentElement;
-    let text;
-    if (has(rate)) {
-      $('#calc-rate').textContent = `${calcProduct.nombre}: ${rate}% de comisión sobre el monto de la venta.`;
-      text = money(Math.round((n * rate) / 100));
-      box.classList.remove('is-tbd');
-    } else {
-      $('#calc-rate').textContent = `La comisión de ${calcProduct.nombre} está por definir.`;
-      text = TBD;
-      box.classList.add('is-tbd');
-    }
+    const sales = Object.values(counts).reduce((a, b) => a + b, 0);
+    const total = D.servicios.reduce((sum, s) => sum + counts[s.id] * s.comision, 0);
+    $('#calc-note').textContent = sales
+      ? `${sales} ${sales === 1 ? 'venta' : 'ventas'} este mes`
+      : 'Agrega tus ventas con los botones +';
+    const text = money(total);
     if (text !== lastShown) { lastShown = text; setDigits(text); }
   }
 
-  function setupCalc() {
-    const bar = $('#calc-tabs');
-    bar.innerHTML = '<span class="t-tabs-pill" aria-hidden="true"></span>' +
-      D.productos.map((p, i) => `<button class="t-tab" role="tab" type="button" aria-selected="${i === 0}" data-id="${esc(p.id)}">${esc(p.nombre)}</button>`).join('');
-    const tabs = makeTabs(bar, (tab) => {
-      calcProduct = D.productos.find((p) => p.id === tab.dataset.id);
-      if (has(calcProduct.precio)) amount.value = String(calcProduct.precio);
-      updateCalc();
-    });
-    if (has(calcProduct.precio)) amount.value = String(calcProduct.precio);
-    amount.addEventListener('input', updateCalc);
-    updateCalc();
-    return tabs;
+  // ---------------- Sidebar: navegación, scroll y móvil ----------------
+  const shell = app;
+  const menuBtn = $('#menu-btn');
+  function openMenu() { shell.classList.add('menu-open'); menuBtn.setAttribute('aria-expanded', 'true'); }
+  function closeMenu() { shell.classList.remove('menu-open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  menuBtn.addEventListener('click', () => (shell.classList.contains('menu-open') ? closeMenu() : openMenu()));
+  $('#scrim').addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && closeMenu());
+
+  const navLinks = $$('#sb-nav a');
+  const sections = navLinks.map((a) => document.getElementById(a.dataset.target));
+  let spyPausedUntil = 0;
+
+  function setActive(id) {
+    navLinks.forEach((a) => (a.dataset.target === id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
   }
+  function goTo(id) {
+    closeMenu();
+    setActive(id);
+    spyPausedUntil = Date.now() + 900;
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  navLinks.forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); goTo(a.dataset.target); }));
+  $$('[data-goto]').forEach((b) => b.addEventListener('click', () => goTo(b.dataset.goto)));
+
+  window.addEventListener('scroll', () => {
+    if (Date.now() < spyPausedUntil || app.hidden) return;
+    let current = sections[0];
+    for (const s of sections) if (s.getBoundingClientRect().top <= window.innerHeight * 0.35) current = s;
+    // Al llegar al fondo, marca la última sección
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) current = sections[sections.length - 1];
+    setActive(current.id);
+  }, { passive: true });
 
   // ---------------- Arranque ----------------
-  renderProducts();
+  renderStats();
+  renderServices();
   renderRules();
-  renderBenefits();
   renderSteps();
   renderFaq();
+  setupCategories();
+  renderCalc();
 
-  let calcTabs;
-  let ready = false;
   function unlock() {
     lock.hidden = true;
     app.hidden = false;
-    if (!ready) {
-      setupNav();
-      calcTabs = setupCalc();
-      ready = true;
-    }
+    renderGreeting();
     requestAnimationFrame(() => {
-      navTabs.snap();
-      calcTabs.snap();
-      const hero = $('#hero');
-      hero.classList.remove('is-hiding', 'is-shown');
-      void hero.offsetHeight;
-      hero.classList.add('is-shown');
+      catTabs.snap();
+      const g = $('#greeting');
+      g.classList.remove('is-hiding', 'is-shown');
+      void g.offsetHeight;
+      g.classList.add('is-shown');
+      window.dispatchEvent(new Event('scroll'));
     });
   }
 
-  if (store.get()) unlock();
+  if (session.get()) unlock();
 })();
