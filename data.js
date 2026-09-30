@@ -65,11 +65,6 @@ window.SELLERS = {
     },
   ],
 
-  comisiones: [
-    { titulo: 'Cómo se calcula', texto: 'Un monto fijo por venta cerrada: $1,000 en servicios genéricos y el primer mes completo ($500) en Clínicas. El IVA no cambia tu comisión.' },
-    { titulo: 'Cuándo se paga', texto: null },
-    { titulo: 'Qué cuenta como venta', texto: null },
-  ],
 
 
   objeciones: [

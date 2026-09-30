@@ -174,21 +174,6 @@
   const periodo = (s) => (s.periodo === 'mes' ? ' / mes' : '');
   const catName = (id) => (D.categorias.find((c) => c.id === id) || {}).nombre || '';
 
-  function renderStats() {
-    const maxCom = Math.max(...D.servicios.map((s) => s.comision));
-    const stats = [
-      { icon: 'assets/miiles-azul.svg', num: D.servicios.length, lbl: 'Servicios para vender' },
-      { icon: 'assets/estrella-azul.svg', num: money(maxCom), lbl: 'Comisión máxima por venta' },
-      { icon: 'assets/sonrisa-azul.svg', num: `+${ivaPct}%`, lbl: 'IVA solo si piden factura' },
-    ];
-    $('#stats').innerHTML = stats.map((s) => `
-      <div class="stat">
-        <span class="stat-tile"><img src="${s.icon}" alt=""></span>
-        <span class="stat-num">${esc(s.num)}</span>
-        <span class="stat-lbl">${esc(s.lbl)}</span>
-      </div>`).join('');
-  }
-
   function accordion(title, bodyHtml) {
     return `
       <div class="t-acc" data-open="false">
@@ -236,15 +221,6 @@
         </div>
       </article>`).join('');
   }
-
-  function renderRules() {
-    $('#rules').innerHTML = D.comisiones.map((r) => `
-      <div class="rule">
-        <h3>${esc(r.titulo)}</h3>
-        <p class="${has(r.texto) ? '' : 'tbd'}">${has(r.texto) ? esc(r.texto) : 'Por definir'}</p>
-      </div>`).join('');
-  }
-
 
   function renderFaq() {
     $('#faq').innerHTML = D.objeciones.map((o) => accordion(o.pregunta, esc(o.respuesta))).join('');
@@ -309,62 +285,6 @@
     });
   }
 
-  // ---------------- Calculadora ----------------
-  const counts = Object.fromEntries(D.servicios.map((s) => [s.id, 0]));
-  const valueEl = $('#calc-value');
-
-  function setDigits(str) {
-    valueEl.classList.remove('is-animating');
-    valueEl.replaceChildren();
-    const chars = str.split('');
-    chars.forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.className = 't-digit';
-      span.textContent = ch;
-      if (i === chars.length - 2) span.dataset.stagger = '1';
-      else if (i === chars.length - 1) span.dataset.stagger = '2';
-      valueEl.appendChild(span);
-    });
-    void valueEl.offsetHeight;
-    valueEl.classList.add('is-animating');
-  }
-
-  function renderCalc() {
-    $('#calc-list').innerHTML = D.servicios.map((s) => `
-      <div class="calc-item">
-        <div class="calc-item-text">
-          <b>${esc(s.nombre)}</b>
-          <small>${money(s.comision)} por venta · ${esc(s.comisionNota)}</small>
-        </div>
-        <div class="stepper">
-          <button type="button" data-step="-1" data-id="${esc(s.id)}" aria-label="Quitar una venta de ${esc(s.nombre)}" disabled>${ICON.minus}</button>
-          <output id="count-${esc(s.id)}">0</output>
-          <button type="button" class="plus" data-step="1" data-id="${esc(s.id)}" aria-label="Agregar una venta de ${esc(s.nombre)}">${ICON.plus}</button>
-        </div>
-      </div>`).join('');
-    $('#calc-list').addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-step]');
-      if (!btn) return;
-      const id = btn.dataset.id;
-      counts[id] = Math.max(0, Math.min(99, counts[id] + Number(btn.dataset.step)));
-      $(`#count-${id}`).textContent = counts[id];
-      btn.parentElement.querySelector('[data-step="-1"]').disabled = counts[id] === 0;
-      updateCalc();
-    });
-    updateCalc();
-  }
-
-  let lastShown = '';
-  function updateCalc() {
-    const sales = Object.values(counts).reduce((a, b) => a + b, 0);
-    const total = D.servicios.reduce((sum, s) => sum + counts[s.id] * s.comision, 0);
-    $('#calc-note').textContent = sales
-      ? `${sales} ${sales === 1 ? 'venta' : 'ventas'} este mes`
-      : 'Agrega tus ventas con los botones +';
-    const text = money(total);
-    if (text !== lastShown) { lastShown = text; setDigits(text); }
-  }
-
   // ---------------- Sidebar: navegación, scroll y móvil ----------------
   const shell = app;
   const menuBtn = $('#menu-btn');
@@ -420,12 +340,9 @@
   }, { passive: true });
 
   // ---------------- Arranque ----------------
-  renderStats();
   renderServices();
-  renderRules();
   renderFaq();
   setupCategories();
-  renderCalc();
 
   function unlock() {
     lock.hidden = true;
