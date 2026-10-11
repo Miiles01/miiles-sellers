@@ -197,12 +197,36 @@
   });
 
   /* ---------- Entradas suaves: fade + subida, en lotes ---------- */
-  const fadeSel = '.intro .label, .text-item, .split-text .label, .split-text .muted, .split-text .facts, .split-text .btn, .bleed-text p, .bleed-text .btn, .bleed-quote cite, .tabs-menu, .pane.is-on .dish, .footer-grid > *, .footer-cta .btn, .num';
+  const fadeSel = '.split-text .btn, .bleed-text .btn, .tabs-menu, .pane.is-on .dish, .footer-grid > *, .footer-cta .btn, .num';
   gsap.set(fadeSel, { opacity: 0, y: 36 });
   ScrollTrigger.batch(fadeSel, {
     start: 'top 92%', once: true,
     onEnter: els => gsap.to(els, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: .1, clearProps: 'transform' })
   });
+
+  /* ---------- Títulos chicos (.text): palabra por palabra con SplitText ---------- */
+  if (window.SplitText) gsap.registerPlugin(SplitText);
+  $('.text').forEach(el => {
+    const words = window.SplitText ? SplitText.create(el, { type: 'words' }).words : [el];
+    gsap.from(words, {
+      opacity: 0, y: 15,
+      stagger: 0.06, duration: 0.5,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+    });
+  });
+
+  /* ---------- Párrafos (.line): suben uno tras otro dentro de su bloque ---------- */
+  gsap.set('.line', { y: 30, opacity: 0 });
+  ScrollTrigger.batch('.line', {
+    start: 'top 92%', once: true,
+    onEnter: els => gsap.to(els, {
+      y: 0, opacity: 1,
+      stagger: 0.2, duration: 0.8,
+      ease: 'power2.out', clearProps: 'transform'
+    })
+  });
+
   // Línea divisoria que crece en cada ítem de lista
   $('.text-item').forEach(el => ScrollTrigger.create({
     trigger: el, start: 'top 90%', once: true,
