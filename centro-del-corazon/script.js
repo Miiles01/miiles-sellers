@@ -107,7 +107,6 @@
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
-    lenis.stop(); // se libera al terminar el preloader
   }
   $('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const id = a.getAttribute('href');
@@ -157,9 +156,7 @@
   gsap.set('.hero .marquee-track', { yPercent: 40, opacity: 0 });
   gsap.set('.hero .media-fill', { scale: 1.3 });
 
-  /* ---------- Preloader → entrada del hero ---------- */
-  const pre = d.querySelector('.pre'), count = d.querySelector('.pre-count');
-  const counter = { n: 0 };
+  /* ---------- Entrada del hero (sin preloader: arranca al cargar) ---------- */
   const intro = gsap.timeline({ paused: true, defaults: { ease: 'power4.out' } })
     .to('.hero .media-fill', { scale: 1, duration: 2.2, ease: 'expo.out' }, 0)
     .to(heroWords, { yPercent: 0, duration: 1.3, stagger: .05 }, .15)
@@ -169,27 +166,13 @@
     .to('.hero .marquee-track', { yPercent: 0, opacity: 1, duration: 1.6, ease: 'expo.out' }, .3)
     .to('.bar', { yPercent: 0, duration: 1.1 }, .9);
 
-  let started = false;
-  const start = () => {
-    if (started) return; started = true;
-    gsap.timeline()
-      .to(pre, { yPercent: -100, duration: 1.1, ease: 'expo.inOut' })
-      .add(() => intro.play(), '-=.55')
-      .add(() => { pre.remove(); lenis && lenis.start(); ScrollTrigger.refresh(); });
-  };
-  const fontsReady = d.fonts ? Promise.race([d.fonts.ready, new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();
-  fontsReady.then(() => gsap.to(counter, {
-    n: 100, duration: 1.3, ease: 'power2.inOut',
-    onUpdate: () => count.textContent = Math.round(counter.n),
-    onComplete: start
-  }));
-  setTimeout(start, 5000); // red de seguridad
+  intro.play();
 
   /* ---------- Barra: se oculta al bajar, vuelve al subir + progreso ---------- */
   ScrollTrigger.create({
     start: 0, end: 'max',
     onUpdate: s => {
-      if (!started || sheet.classList.contains('open')) return;
+      if (sheet.classList.contains('open')) return;
       const hide = s.direction === 1 && s.scroll() > 240;
       bar.classList.toggle('is-hidden', hide);
     }
