@@ -7,7 +7,7 @@
   /* ---------- Cosas que no dependen de GSAP ---------- */
 
   // Imágenes reales: <div data-img="x" data-src="img/foto.jpg|https://respaldo.jpg">
-  // Prueba cada fuente en orden; si ninguna carga, se queda el degradado de amanecer.
+  // Prueba cada fuente en orden; si ninguna carga, se queda el degradado violeta.
   $('[data-img][data-src]').forEach(box => {
     const srcs = box.dataset.src.split('|').filter(Boolean);
     const tryNext = () => {

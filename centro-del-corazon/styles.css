@@ -1,14 +1,14 @@
 /* ============ Tokens (editar aquí para re-marcar la plantilla) ============ */
 :root {
-  --paper: #fbf4ec;
-  --ink: #33261f;
-  --ink-60: #33261f99;
-  --ink-10: #33261f1a;
-  --paper-60: #fbf4ec99;
-  --brand: #c4675a;      /* rosa terracota: el corazón */
-  --gold: #d9a86c;       /* luz de amanecer */
-  --blush: #f4e3d7;
-  --dark-2: #4a3830;
+  --paper: #f8f5fc;
+  --ink: #2a1f3d;
+  --ink-60: #2a1f3d99;
+  --ink-10: #2a1f3d1a;
+  --paper-60: #f8f5fc99;
+  --brand: #7b4fc4;      /* violeta de la marca */
+  --lilac: #c9b2f0;       /* lila claro para acentos sobre fondo oscuro */
+  --blush: #efe8f8;
+  --dark-2: #3d2d5a;
 
   --sans: "Hanken Grotesk", system-ui, sans-serif;
   --serif: "Belleza", Georgia, serif;
@@ -58,16 +58,16 @@ img { max-width: 100%; display: block; }
 /* ============ Medios (reemplazar .media-fill por <img> o <video>) ============ */
 .media, .bleed { position: absolute; inset: 0; overflow: hidden; }
 .media-fill { position: absolute; inset: -5% 0; width: 100%; height: 110%; object-fit: cover;
-  background: radial-gradient(60% 50% at 70% 30%, #f6c99a 0%, transparent 70%), radial-gradient(70% 60% at 20% 80%, #c4675a 0%, transparent 70%), linear-gradient(160deg, #e9b48f, #a8574d 55%, #5b3a3a); will-change: transform; }
-.bleed .media-fill { background: radial-gradient(50% 60% at 50% 100%, #f8d6a8 0%, transparent 70%), linear-gradient(180deg, #c98a7a, #e7b28c 55%, #f3cfa2); }
-.ratio-23 .media-fill, .thumb .media-fill { background: radial-gradient(70% 50% at 50% 20%, #fbe3c6 0%, transparent 70%), linear-gradient(180deg, #e7b8a0, #b86a5c); }
-[data-img="split-2"] .media-fill, [data-img="bleed-2"] .media-fill { background: radial-gradient(60% 50% at 50% 30%, #f3e6c4 0%, transparent 70%), linear-gradient(180deg, #a9b59a, #6f8a72 60%, #3f5a4c); }
-[data-img="ananda"] .media-fill { background: radial-gradient(55% 45% at 50% 35%, #fff1e2 0%, transparent 70%), linear-gradient(180deg, #f1d2bf, #d49a86); }
+  background: radial-gradient(60% 50% at 70% 30%, #e3d4fb 0%, transparent 70%), radial-gradient(70% 60% at 20% 80%, #7b4fc4 0%, transparent 70%), linear-gradient(160deg, #b89be6, #6a43ad 55%, #2f2148); will-change: transform; }
+.bleed .media-fill { background: radial-gradient(50% 60% at 50% 100%, #efe6ff 0%, transparent 70%), linear-gradient(180deg, #8c6cc8, #b79ce4 55%, #ddcdf7); }
+.ratio-23 .media-fill, .thumb .media-fill { background: radial-gradient(70% 50% at 50% 20%, #f3ecff 0%, transparent 70%), linear-gradient(180deg, #c6b0ee, #7d58c2); }
+[data-img="split-2"] .media-fill, [data-img="bleed-2"] .media-fill { background: radial-gradient(60% 50% at 50% 30%, #e6e0fb 0%, transparent 70%), linear-gradient(180deg, #9d8fd8, #5b4a9e 60%, #2c2458); }
+[data-img="ananda"] .media-fill { background: radial-gradient(55% 45% at 50% 35%, #fbf8ff 0%, transparent 70%), linear-gradient(180deg, #e2d6f6, #a98bdc); }
 
 
 /* ============ HERO ============ */
-.hero { position: relative; min-height: 110vh; padding-top: 9rem; color: var(--paper); background: #6b3f3a; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
-.hero-overlay, .bleed-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, #2a1a1640, #2a1a1626 40%, #2a1a1666); pointer-events: none; }
+.hero { position: relative; min-height: 110vh; padding-top: 9rem; color: var(--paper); background: #4a3474; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+.hero-overlay, .bleed-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, #1e153040, #1e153026 40%, #1e153066); pointer-events: none; }
 .hero-mid { display: grid; grid-template-columns: 1fr 1fr 1fr; z-index: 2; }
 .hero-sub { grid-column: 2 / 4; display: flex; flex-direction: column; gap: 2.5rem; align-items: flex-start; }
 .lines { font: 400 var(--fs-md)/1.05 var(--serif); letter-spacing: -.02em; display: flex; flex-direction: column; }
@@ -92,7 +92,7 @@ img { max-width: 100%; display: block; }
 .btn.plain { background: var(--brand); color: var(--paper); }
 .btn.ghost { border: 1px solid #fff8; color: var(--paper); }
 @media (hover: hover) { .btn.ghost:hover { background: #fff2; } .btn.dark:hover { background: var(--brand); } }
-.btn:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.btn:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
 
 /* Enlace con "roll": el texto sube y entra su copia */
 .roll { position: relative; display: block; overflow: hidden; line-height: 1.1; }
@@ -139,7 +139,7 @@ img { max-width: 100%; display: block; }
 @media (hover: hover) { .dish:hover .dish-head { transform: translateX(.75rem); } }
 
 /* ============ Footer ============ */
-.footer { background: radial-gradient(80% 60% at 80% 100%, #6b3a33 0%, transparent 70%), var(--ink); color: var(--paper); min-height: 100vh; padding-top: var(--pad); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative; z-index: 1; }
+.footer { background: radial-gradient(80% 60% at 80% 100%, #4d3380 0%, transparent 70%), var(--ink); color: var(--paper); min-height: 100vh; padding-top: var(--pad); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative; z-index: 1; }
 .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); font-size: var(--fs-small); }
 .f-col { display: flex; flex-direction: column; gap: .5rem; color: var(--paper-60); align-items: flex-start; }
 .f-title { color: var(--paper); margin-bottom: 1rem; }
@@ -232,9 +232,9 @@ img { max-width: 100%; display: block; }
 
 /* ============ Centro del Corazón: acentos propios ============ */
 em { font-family: var(--script); font-style: italic; font-weight: 400; letter-spacing: -.01em; }
-.display-l em, .lines em { color: var(--gold); }
+.display-l em, .lines em { color: var(--lilac); }
 .h-sm em { color: var(--brand); }
-.footer-cta em { color: var(--gold); }
+.footer-cta em { color: var(--lilac); }
 .section--soft { background: var(--blush); }
 .split-text .label { margin-bottom: -1rem; }
 .quote { font: italic 400 var(--fs-sm)/1.15 var(--script); color: var(--brand); max-width: 22ch; }
@@ -244,31 +244,31 @@ em { font-family: var(--script); font-style: italic; font-weight: 400; letter-sp
 .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
 .hero .label { opacity: .8; }
 .hero-glow { position: absolute; inset: -20%; pointer-events: none; mix-blend-mode: soft-light; opacity: .9;
-  background: radial-gradient(35% 30% at 70% 35%, #ffd9a8 0%, transparent 70%), radial-gradient(40% 35% at 25% 70%, #f08f7f 0%, transparent 70%);
+  background: radial-gradient(35% 30% at 70% 35%, #e9dcff 0%, transparent 70%), radial-gradient(40% 35% at 25% 70%, #a77be6 0%, transparent 70%);
   animation: aura 14s ease-in-out infinite alternate; }
 @keyframes aura { to { transform: translate3d(-4%, 3%, 0) scale(1.08) rotate(4deg); } }
 
-/* Marquee: corazones en rosa */
-.marquee-track i { font-style: normal; color: var(--gold); font-size: .55em; vertical-align: .35em; margin-inline: .15em; }
+/* Marquee: corazones en lila */
+.marquee-track i { font-style: normal; color: var(--lilac); font-size: .55em; vertical-align: .35em; margin-inline: .15em; }
 .marquee--footer .marquee-track i { color: var(--brand); }
 
 /* Preloader con corazón que late */
-.js .pre { background: radial-gradient(60% 60% at 50% 50%, #5a3732 0%, var(--ink) 70%); }
+.js .pre { background: radial-gradient(60% 60% at 50% 50%, #3e2a66 0%, var(--ink) 70%); }
 .pre-heart { position: absolute; top: 50%; left: 50%; width: 3rem; height: 3rem; margin: -1.5rem 0 0 -1.5rem; fill: var(--brand); animation: beat 1.2s ease-in-out infinite; }
-.pre-brand em { color: var(--gold); }
+.pre-brand em { color: var(--lilac); }
 @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
 
 /* Respira: orbe que crece y se suelta */
 .breathe { position: relative; z-index: 1; overflow: hidden; padding-block: 9rem; color: var(--paper);
-  background: radial-gradient(60% 70% at 75% 50%, #b9665a 0%, transparent 70%), radial-gradient(50% 60% at 10% 90%, #8a4a42 0%, transparent 70%), #4a2f2b; }
+  background: radial-gradient(60% 70% at 75% 50%, #7a52c0 0%, transparent 70%), radial-gradient(50% 60% at 10% 90%, #4a2f7a 0%, transparent 70%), #2f2148; }
 .breathe .muted { color: var(--paper-60); }
 .breathe-in { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
 .breathe-copy { display: flex; flex-direction: column; gap: 2rem; align-items: flex-start; padding-inline: 4vw 0; }
 .orb-wrap { --s: .55; --t: 4s; position: relative; aspect-ratio: 1; width: min(100%, 34rem); justify-self: center; display: grid; place-items: center; }
 .orb, .orb-ring { grid-area: 1 / 1; border-radius: 50%; width: 100%; height: 100%; transform: scale(var(--s)); transition: transform var(--t) cubic-bezier(.37, 0, .63, 1); }
-.orb { background: radial-gradient(circle at 40% 35%, #ffe8cf 0%, #f2b48c 35%, #c4675a 75%); box-shadow: 0 0 6rem #f2b48c66; }
-.orb-ring { border: 1px solid #fbf4ec40; transform: scale(calc(var(--s) * 1.18)); }
-.orb-ring.r2 { border-color: #fbf4ec1f; transform: scale(calc(var(--s) * 1.4)); }
+.orb { background: radial-gradient(circle at 40% 35%, #f6f0ff 0%, #c3a6f2 35%, #7b4fc4 75%); box-shadow: 0 0 6rem #c3a6f266; }
+.orb-ring { border: 1px solid #f8f5fc40; transform: scale(calc(var(--s) * 1.18)); }
+.orb-ring.r2 { border-color: #f8f5fc1f; transform: scale(calc(var(--s) * 1.4)); }
 .orb-wrap:not(.on) .orb { animation: idle 5s ease-in-out infinite; }
 @keyframes idle { 50% { transform: scale(calc(var(--s) * 1.06)); } }
 .orb-word { grid-area: 1 / 1; z-index: 1; font: italic 400 clamp(1.5rem, 2.6vw, 2.4rem)/1 var(--script); color: var(--ink); transition: opacity .6s; text-align: center; }
@@ -276,7 +276,7 @@ em { font-family: var(--script); font-style: italic; font-weight: 400; letter-sp
 
 /* WhatsApp flotante */
 .wa-float { position: fixed; z-index: 130; right: 1.25rem; bottom: 1.25rem; width: 3.5rem; height: 3.5rem; border-radius: 50%; display: grid; place-items: center;
-  background: var(--brand); color: #fff; box-shadow: 0 .75rem 2rem #33261f40; transition: transform .4s var(--ease); }
+  background: var(--brand); color: #fff; box-shadow: 0 .75rem 2rem #2a1f3d40; transition: transform .4s var(--ease); }
 .wa-float svg { width: 1.6rem; height: 1.6rem; fill: currentColor; }
 @media (hover: hover) { .wa-float:hover { transform: scale(1.08); } }
 .wa-float::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--brand); animation: ping 2.4s ease-out infinite; }

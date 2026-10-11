@@ -3,7 +3,7 @@
 Hecha sobre la plantilla **Amber** (`Miiles01/ideas/templates/amber`), en HTML/CSS/JS plano (GSAP + ScrollTrigger + Lenis por CDN).
 
 ## Fotos
-Cada imagen busca primero un archivo en `img/`. Si no existe, usa una foto de respaldo de Unsplash, y si tampoco carga, se queda un degradado de amanecer.
+Cada imagen busca primero un archivo en `img/`. Si no existe, usa una foto de respaldo de Unsplash, y si tampoco carga, se queda un degradado violeta.
 Para poner las fotos del cliente, súbelas con estos nombres:
 
 | Archivo | Dónde aparece |
