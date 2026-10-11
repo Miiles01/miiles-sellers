@@ -197,7 +197,7 @@
   });
 
   /* ---------- Entradas suaves: fade + subida, en lotes ---------- */
-  const fadeSel = '.intro .label, .text-item, .split-text .label, .split-text .muted, .split-text .btn, .tabs-menu, .pane.is-on .dish, .footer-grid > *, .footer-cta .btn, .num';
+  const fadeSel = '.intro .label, .text-item, .split-text .label, .split-text .muted, .split-text .facts, .split-text .btn, .bleed-text p, .bleed-text .btn, .bleed-quote cite, .tabs-menu, .pane.is-on .dish, .footer-grid > *, .footer-cta .btn, .num';
   gsap.set(fadeSel, { opacity: 0, y: 36 });
   ScrollTrigger.batch(fadeSel, {
     start: 'top 92%', once: true,

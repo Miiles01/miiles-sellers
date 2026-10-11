@@ -181,8 +181,8 @@ img { max-width: 100%; display: block; }
 .brand { display: inline-flex; align-items: center; gap: .6rem; font: 400 1.25rem/1 var(--serif); letter-spacing: -.01em; white-space: nowrap; }
 .brand em { color: var(--lilac); }
 .bar.is-solid .brand em { color: var(--brand); }
-.brand-mark { width: 1.35rem; height: 1.35rem; fill: currentColor; transition: transform .6s var(--ease); }
-@media (hover: hover) { .brand:hover .brand-mark { transform: scale(1.15); } }
+.brand-mark { width: 1.15rem; height: 1.3rem; background: currentColor; -webkit-mask: url(img/logo-estrella.png) center / contain no-repeat; mask: url(img/logo-estrella.png) center / contain no-repeat; transition: transform .6s var(--ease); }
+@media (hover: hover) { .brand:hover .brand-mark { transform: rotate(45deg) scale(1.1); } }
 .nav { display: flex; gap: 2.25rem; }
 .nav a { position: relative; padding-block: .35rem; }
 .nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease); }
@@ -284,3 +284,21 @@ em { font-family: var(--script); font-style: italic; font-weight: 400; letter-sp
 
 /* Meditaciones: título y botón juntos sobre la imagen */
 .bleed-text { display: flex; flex-direction: column; gap: 2rem; align-items: flex-start; }
+
+/* Datos concretos de cada curso */
+.facts { display: grid; gap: 1rem; margin: 0; max-width: 36ch; }
+.facts div { display: grid; gap: .2rem; padding-top: 1rem; border-top: 1px solid var(--ink-10); }
+.facts dt { font-size: var(--fs-small); color: var(--brand); }
+.facts dd { margin: 0; color: var(--ink); }
+
+/* Cita sobre imagen y texto de Meditaciones */
+.bleed-quote { margin: 0; display: flex; flex-direction: column; gap: 1.25rem; }
+.bleed-quote .display-l { font-size: var(--fs-md); line-height: 1.02; max-width: 20ch; }
+.bleed-quote cite { font: italic 400 1.25rem/1 var(--script); color: var(--lilac); }
+.bleed-text p { max-width: 44ch; color: var(--paper); opacity: .85; }
+.bleed .bleed-overlay { background: #1e153059; }
+@media (max-width: 767px) {
+  .bleed-text { gap: 1.25rem; }
+  .bleed-text p { font-size: .95rem; }
+  #meditaciones .bleed-overlay { background: #1e15309e; }
+}
