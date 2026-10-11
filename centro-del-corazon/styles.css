@@ -302,3 +302,14 @@ em { font-family: var(--script); font-style: italic; font-weight: 400; letter-sp
   .bleed-text p { font-size: .95rem; }
   #meditaciones .bleed-overlay { background: #1e15309e; }
 }
+
+/* Portada: el texto se aparta para dejar libre a la persona del centro de la foto */
+.hero .hero-mid { grid-template-columns: 1fr; gap: 1.5rem; }
+.hero .hero-sub { grid-column: 1; max-width: 38vw; }
+.hero .media-fill.has-img { background-position: center 30% !important; }
+@media (max-width: 991px) { .hero .hero-sub { max-width: 50vw; } }
+@media (max-width: 767px) {
+  .hero .hero-mid { margin-top: auto; padding-bottom: 1.5rem; }
+  .hero .hero-sub { max-width: none; }
+  .hero .media-fill.has-img { background-position: center 20% !important; }
+}
