@@ -26,39 +26,6 @@
     tryNext();
   });
 
-  // Respira: 4 tiempos inhala, 4 sostén, 6 exhala (funciona también sin GSAP)
-  const orb = d.querySelector('.orb-wrap'), toggle = d.querySelector('[data-breathe-toggle]');
-  if (orb && toggle) {
-    const word = d.querySelector('[data-breathe-word]'), live = d.querySelector('[data-breathe-live]');
-    const steps = [['Inhala', 1, 4], ['Sostén', 1, 4], ['Exhala', .55, 6]];
-    let timer = null, i = 0;
-    const say = text => {
-      word.classList.add('swap');
-      setTimeout(() => { word.textContent = text; word.classList.remove('swap'); }, 300);
-      live.textContent = text;
-    };
-    const step = () => {
-      const [text, scale, secs] = steps[i++ % steps.length];
-      orb.style.setProperty('--t', secs + 's');
-      orb.style.setProperty('--s', scale);
-      say(text);
-      timer = setTimeout(step, secs * 1000);
-    };
-    const stop = () => {
-      clearTimeout(timer); timer = null; i = 0;
-      orb.classList.remove('on');
-      orb.style.setProperty('--t', '1.5s'); orb.style.setProperty('--s', .55);
-      say('Cuando quieras');
-      toggle.textContent = 'Comenzar'; toggle.setAttribute('aria-pressed', 'false');
-    };
-    toggle.addEventListener('click', () => {
-      if (timer) return stop();
-      orb.classList.add('on');
-      toggle.textContent = 'Pausar'; toggle.setAttribute('aria-pressed', 'true');
-      step();
-    });
-  }
-
   // Hoja del menú móvil
   const sheet = d.getElementById('sheet'), burger = d.querySelector('.burger');
   let lenis = null;
@@ -69,11 +36,31 @@
     burger.setAttribute('aria-expanded', open);
     burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
     root.classList.toggle('lock', open);
+    paintBar();
     lenis && (open ? lenis.stop() : lenis.start());
   };
   burger.addEventListener('click', () => setSheet(!sheet.classList.contains('open')));
   addEventListener('keydown', e => e.key === 'Escape' && setSheet(false));
   matchMedia('(min-width: 768px)').addEventListener('change', e => e.matches && setSheet(false));
+
+  // Barra: sólida en cuanto deja atrás la portada + enlace activo según la sección
+  const bar = d.querySelector('.bar'), hero = d.querySelector('.hero');
+  const paintBar = () => {
+    const past = scrollY > hero.offsetHeight - bar.offsetHeight - 8;
+    bar.classList.toggle('is-solid', past && !sheet.classList.contains('open'));
+  };
+  addEventListener('scroll', paintBar, { passive: true });
+  addEventListener('resize', paintBar);
+  paintBar();
+  const links = $('.nav a');
+  const watched = links.map(a => d.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + e.target.id));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    watched.forEach(el => io.observe(el));
+  }
 
   // Tabs con píldora deslizante
   $('[data-tabs]').forEach(box => {
@@ -199,7 +186,6 @@
   setTimeout(start, 5000); // red de seguridad
 
   /* ---------- Barra: se oculta al bajar, vuelve al subir + progreso ---------- */
-  const bar = d.querySelector('.bar');
   ScrollTrigger.create({
     start: 0, end: 'max',
     onUpdate: s => {
@@ -228,7 +214,7 @@
   });
 
   /* ---------- Entradas suaves: fade + subida, en lotes ---------- */
-  const fadeSel = '.intro .label, .text-item, .split-text .label, .split-text .muted, .split-text .btn, .split-text .quote, .breathe-copy .label, .breathe-copy .muted, .breathe-copy .btn, .orb-wrap, .tabs-menu, .pane.is-on .dish, .footer-grid > *, .footer-cta .btn, .num';
+  const fadeSel = '.intro .label, .text-item, .split-text .label, .split-text .muted, .split-text .btn, .tabs-menu, .pane.is-on .dish, .footer-grid > *, .footer-cta .btn, .num';
   gsap.set(fadeSel, { opacity: 0, y: 36 });
   ScrollTrigger.batch(fadeSel, {
     start: 'top 92%', once: true,

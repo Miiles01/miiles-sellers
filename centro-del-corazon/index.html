@@ -7,7 +7,7 @@
   <meta name="description" content="Más de treinta años acompañando a las personas a sanar, servir y ayudar desde el corazón. Curso Básico del Corazón, Un Curso de Milagros y meditaciones con Ananda Mariscal en Ciudad de México.">
   <meta name="theme-color" content="#f8f5fc">
   <meta property="og:title" content="Centro del Corazón">
-  <meta property="og:description" content="Vuelve a tu esencia. Sanación, paz y alegría desde el corazón.">
+  <meta property="og:description" content="Centro de crecimiento interior y espiritual, dedicado al servicio.">
   <meta property="og:image" content="img/hero.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 28S3 20 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20 16 28 16 28z' fill='%237b4fc4'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,16 +26,19 @@
     <span class="pre-count">0</span>
   </div>
 
-  <!-- Barra fija -->
+  <!-- Barra fija: transparente sobre la portada, sólida al bajar -->
   <header class="bar">
-    <a class="brand" href="#top">Centro del Corazón</a>
+    <a class="brand" href="#top" aria-label="Centro del Corazón, inicio">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28S3 20 3 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 13 3.5C29 20 16 28 16 28z"/></svg>
+      <span>Centro del <em>Corazón</em></span>
+    </a>
     <nav class="nav" aria-label="Principal">
       <a class="roll" href="#nosotros"><span>Nosotros</span><span>Nosotros</span></a>
       <a class="roll" href="#cursos"><span>Cursos</span><span>Cursos</span></a>
-      <a class="roll" href="#respira"><span>Respira</span><span>Respira</span></a>
+      <a class="roll" href="#meditaciones"><span>Meditaciones</span><span>Meditaciones</span></a>
       <a class="roll" href="#contacto"><span>Contacto</span><span>Contacto</span></a>
     </nav>
-    <a class="copy roll" href="https://wa.me/525545117614" target="_blank" rel="noopener"><span>Escríbenos ♡</span><span>Escríbenos ♡</span></a>
+    <a class="bar-cta" href="https://wa.me/525545117614" target="_blank" rel="noopener">Escríbenos</a>
     <button class="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="sheet"><span></span><span></span></button>
   </header>
 
@@ -43,25 +46,24 @@
     <nav aria-label="Móvil">
       <a href="#nosotros" style="--i:0"><span>Nosotros</span></a>
       <a href="#cursos" style="--i:1"><span>Cursos</span></a>
-      <a href="#respira" style="--i:2"><span>Respira</span></a>
-      <a href="#ananda" style="--i:3"><span>Ananda</span></a>
-      <a href="#contacto" style="--i:4"><span>Contacto</span></a>
+      <a href="#meditaciones" style="--i:2"><span>Meditaciones</span></a>
+      <a href="#contacto" style="--i:3"><span>Contacto</span></a>
     </nav>
     <p class="sheet-foot">centrodelcorazon1@gmail.com<br>Ciudad de México</p>
   </div>
 
   <!-- 01 · HERO -->
   <header class="hero" id="top">
-    <div class="media" data-img="hero" data-src="img/hero.jpg|https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=2000&q=80"><div class="media-fill"></div></div>
+    <div class="media" data-img="hero" data-src="img/hero.jpg"><div class="media-fill"></div></div>
     <div class="hero-overlay"></div>
 
     <div class="hero-mid container">
-      <span class="label">Escuela de sanación · desde hace más de 30 años</span>
+      <span class="label">Más de treinta años de escuela</span>
       <div class="hero-sub">
         <h1 class="lines" data-split>
-          <span>Vuelve a tu esencia.</span>
-          <span>Todo lo que buscas</span>
-          <span>ya late en tu corazón.</span>
+          <span>Un centro de crecimiento</span>
+          <span>interior y espiritual,</span>
+          <span>dedicado al servicio.</span>
         </h1>
         <div class="hero-actions">
           <a class="btn glass" href="#cursos">Conoce los cursos</a>
@@ -72,173 +74,69 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Paz <i>♡</i> Alegría <i>♡</i> Esencia <i>♡</i></span><span>Paz <i>♡</i> Alegría <i>♡</i> Esencia <i>♡</i></span>
+        <span>Sanar <i>♡</i> Servir <i>♡</i> Ayudar <i>♡</i></span><span>Sanar <i>♡</i> Servir <i>♡</i> Ayudar <i>♡</i></span>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- 02 · INTRO -->
+    <!-- 02 · NOSOTROS: quiénes somos + Ananda Mariscal -->
     <section class="section" id="nosotros">
       <div class="container">
         <div class="intro">
-          <span class="label">Bienvenida</span>
-          <p class="display reveal">Somos una escuela para aprender a sanar, servir y ayudar. Un espacio de crecimiento interior, espiritual y de medicina alternativa donde cada persona recuerda la paz y la alegría que ya habitan en ella.</p>
-        </div>
-
-        <ul class="text-list">
-          <li class="text-item">
-            <div class="label-col"><span class="label">Sanar</span><span class="label">(01)</span></div>
-            <div class="text-col">
-              <h3 class="h-sm">Una técnica sencilla y amorosa</h3>
-              <p class="muted">Enseñamos una técnica de sanación rápida y sencilla, exclusiva de nuestra escuela, con bases en la física cuántica aplicada.</p>
-            </div>
-          </li>
-          <li class="text-item">
-            <div class="label-col"><span class="label">Servir</span><span class="label">(02)</span></div>
-            <div class="text-col">
-              <h3 class="h-sm">Lo que sanas en ti, lo compartes</h3>
-              <p class="muted">Cuando el corazón se ordena, nace el deseo natural de acompañar a otros. Aquí aprendes a hacerlo con presencia y cuidado.</p>
-            </div>
-          </li>
-          <li class="text-item">
-            <div class="label-col"><span class="label">Ayudar</span><span class="label">(03)</span></div>
-            <div class="text-col">
-              <h3 class="h-sm">Una comunidad que camina contigo</h3>
-              <p class="muted">Más de treinta años de historia y una comunidad que se sostiene en el amor, la escucha y la alegría de crecer juntos.</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <figure class="bleed" data-img="bleed-1" data-src="img/luz.jpg|https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2000&q=80">
-      <div class="media-fill"></div>
-      <div class="bleed-overlay"></div>
-      <figcaption class="bleed-cap container">
-        <h2 class="display-l">Respira.<br>Aquí empieza<br><em>todo</em>.</h2>
-        <span class="num">02</span>
-        <div class="thumb" data-img="thumb-1" data-src="img/manos.jpg|https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=700&q=80"><div class="media-fill"></div></div>
-      </figcaption>
-    </figure>
-
-    <!-- 03 · CURSOS: dos ramas formativas -->
-    <section class="section" id="cursos">
-      <div class="container">
-        <h2 class="xl-title" aria-label="Nuestros cursos"><span>Nuestros</span><span>cursos</span></h2>
-
-        <div class="split">
-          <div class="split-text">
-            <span class="label">Rama 01 · Exclusivo del Centro</span>
-            <h2 class="h-md">Curso Básico del Corazón</h2>
-            <h3 class="h-sm"><em>Aprende a sanar desde adentro</em></h3>
-            <p class="muted">El primer paso del camino. Conoces y practicas la técnica de sanación del Centro, sencilla y profunda, para usarla contigo y con quienes amas. Ideal si nunca has tomado un curso así.</p>
-            <a class="btn dark" href="https://wa.me/525545117614?text=Hola%2C%20quiero%20informes%20del%20Curso%20B%C3%A1sico%20del%20Coraz%C3%B3n" target="_blank" rel="noopener">Quiero informes</a>
-          </div>
-          <div class="ratio-23 split-img" data-img="split-1" data-src="img/curso-basico.jpg|https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1200&q=80"><div class="media-fill"></div></div>
+          <span class="label">Nosotros</span>
+          <p class="display reveal">Somos un centro de crecimiento interior y espiritual y de medicina alternativa, dedicado al servicio. Una escuela para aprender a sanar, servir y ayudar, abierta a personas de cualquier filosofía o creencia.</p>
         </div>
 
         <div class="split split--rev">
           <div class="split-text">
-            <span class="label">Rama 02 · Con Ananda Mariscal</span>
-            <h2 class="h-md">Un Curso de Milagros</h2>
-            <h3 class="h-sm"><em>Del miedo al amor, día a día</em></h3>
-            <p class="muted">Un estudio guiado para cambiar la forma en que miras tu vida y a los demás. Charlas informativas y grupos de estudio para recorrerlo en compañía.</p>
-            <a class="btn dark" href="https://wa.me/525545117614?text=Hola%2C%20quiero%20informes%20de%20Un%20Curso%20de%20Milagros" target="_blank" rel="noopener">Quiero informes</a>
-          </div>
-          <div class="ratio-23 split-img" data-img="split-2" data-src="img/curso-milagros.jpg|https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1200&q=80"><div class="media-fill"></div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 · RESPIRA: ejercicio guiado -->
-    <section class="breathe" id="respira" aria-labelledby="respira-t">
-      <div class="container breathe-in">
-        <div class="breathe-copy">
-          <span class="label">Una pausa para ti</span>
-          <h2 class="h-md" id="respira-t">Respira con nosotros un minuto</h2>
-          <p class="muted">Sigue el círculo. Al inhalar, crece; al exhalar, suelta. Cuatro tiempos para entrar, cuatro para sostener, seis para soltar.</p>
-          <button class="btn plain" type="button" data-breathe-toggle aria-pressed="false">Comenzar</button>
-        </div>
-        <div class="orb-wrap" aria-hidden="true">
-          <div class="orb-ring"></div>
-          <div class="orb-ring r2"></div>
-          <div class="orb"></div>
-          <span class="orb-word" data-breathe-word>Cuando quieras</span>
-        </div>
-        <p class="sr" aria-live="polite" data-breathe-live></p>
-      </div>
-    </section>
-
-    <!-- 05 · CAMINOS: tabs -->
-    <section class="section" id="caminos">
-      <div class="container">
-        <div class="intro">
-          <span class="label">Caminos</span>
-          <p class="display reveal">No importa desde dónde llegues: hay un lugar para ti. Elige cómo quieres empezar y nosotros te acompañamos.</p>
-        </div>
-
-        <div class="tabs" data-tabs>
-          <div class="tabs-menu" role="tablist">
-            <button class="tab is-on" role="tab" data-tab="a">Cursos</button>
-            <button class="tab" role="tab" data-tab="b">Meditaciones</button>
-            <button class="tab" role="tab" data-tab="c">Comunidad</button>
-          </div>
-
-          <div class="pane is-on" data-pane="a">
-            <article class="dish"><div class="dish-head"><h4>Curso Básico del Corazón</h4><span>Presencial</span></div><p class="muted">La técnica de sanación del Centro, paso a paso, para aplicarla en tu vida diaria.</p></article>
-            <article class="dish"><div class="dish-head"><h4>Un Curso de Milagros</h4><span>Grupo de estudio</span></div><p class="muted">Charla informativa abierta y clases guiadas por Ananda Mariscal.</p></article>
-            <article class="dish"><div class="dish-head"><h4>Cursos de profundización</h4><span>Pregunta fechas</span></div><p class="muted">Para quienes ya dieron el primer paso y quieren seguir creciendo en el camino del corazón.</p></article>
-          </div>
-          <div class="pane" data-pane="b">
-            <article class="dish"><div class="dish-head"><h4>Meditaciones guiadas</h4><span>Para todos</span></div><p class="muted">Espacios para aquietar la mente, abrir el corazón y volver a sentir paz.</p></article>
-            <article class="dish"><div class="dish-head"><h4>Meditación en casa</h4><span>A tu ritmo</span></div><p class="muted">Pregúntanos por las meditaciones del Centro para practicar donde estés.</p></article>
-          </div>
-          <div class="pane" data-pane="c">
-            <article class="dish"><div class="dish-head"><h4>La comunidad del Centro</h4><span>Más de 30 años</span></div><p class="muted">Personas que comparten el mismo camino: sanar, servir y ayudar con alegría.</p></article>
-            <article class="dish"><div class="dish-head"><h4>Encuentros y charlas</h4><span>Abiertos</span></div><p class="muted">Charlas informativas para conocernos antes de inscribirte, sin compromiso.</p></article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <figure class="bleed bleed--short" data-img="bleed-2" data-src="img/naturaleza.jpg|https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=80">
-      <div class="media-fill"></div>
-      <div class="bleed-overlay"></div>
-      <figcaption class="bleed-cap container">
-        <h2 class="display-l">Cuando el corazón<br>se aquieta, <em>la vida</em><br>vuelve a sonreír</h2>
-        <span class="num">03</span>
-      </figcaption>
-    </figure>
-
-    <!-- 06 · ANANDA -->
-    <section class="section" id="ananda">
-      <div class="container">
-        <div class="split split--rev">
-          <div class="split-text">
-            <span class="label">Quién guía</span>
+            <span class="label">Quién guía la escuela</span>
             <h2 class="h-md">Ananda Mariscal</h2>
-            <p class="muted">Fundadora y guía del Centro del Corazón. Desde hace más de treinta años acompaña a personas en su proceso de sanación y crecimiento espiritual, e imparte tanto los cursos del Centro como Un Curso de Milagros.</p>
-            <p class="quote">Sanar es recordar quién eres.</p>
+            <p class="muted">Encabeza el Centro del Corazón desde hace más de treinta años e imparte sus dos pilares formativos: los cursos exclusivos del Centro y Un Curso de Milagros.</p>
           </div>
           <div class="ratio-23 split-img" data-img="ananda" data-src="img/ananda.jpg"><div class="media-fill"></div></div>
         </div>
       </div>
     </section>
 
-    <!-- 07 · VALORES -->
-    <section class="section section--soft" id="valores">
+    <!-- 03 · CURSOS: las dos ramas formativas -->
+    <section class="section" id="cursos">
       <div class="container">
-        <h2 class="xl-title"><span>Lo que</span><span>nos mueve</span></h2>
+        <h2 class="xl-title" aria-label="Nuestros cursos"><span>Nuestros</span><span>cursos</span></h2>
 
-        <ul class="text-list">
-          <li class="text-item"><div class="label-col"><span class="label">Amor</span></div><div class="text-col"><p class="display-s reveal">Todo lo que enseñamos nace del amor y vuelve al amor.</p></div></li>
-          <li class="text-item"><div class="label-col"><span class="label">Paz</span></div><div class="text-col"><p class="display-s reveal">Creemos en una paz que no depende de afuera: se cultiva por dentro.</p></div></li>
-          <li class="text-item"><div class="label-col"><span class="label">Alegría</span></div><div class="text-col"><p class="display-s reveal">Crecer también puede ser ligero, luminoso y lleno de risa.</p></div></li>
-          <li class="text-item"><div class="label-col"><span class="label">Servicio</span></div><div class="text-col"><p class="display-s reveal">Lo que sanas en ti se convierte en un regalo para los demás.</p></div></li>
-        </ul>
+        <div class="split">
+          <div class="split-text">
+            <span class="label">Cursos exclusivos del Centro</span>
+            <h2 class="h-md">Curso Básico del Corazón</h2>
+            <p class="muted">Aprende la técnica de sanación rápida y sencilla, exclusiva de nuestra escuela, con bases en la Física Cuántica Aplicada.</p>
+            <a class="btn dark" href="https://wa.me/525545117614?text=Hola%2C%20quiero%20informes%20del%20Curso%20B%C3%A1sico%20del%20Coraz%C3%B3n" target="_blank" rel="noopener">Quiero informes</a>
+          </div>
+          <div class="ratio-23 split-img" data-img="split-1" data-src="img/curso-basico.jpg"><div class="media-fill"></div></div>
+        </div>
+
+        <div class="split split--rev">
+          <div class="split-text">
+            <span class="label">Impartido por Ananda Mariscal</span>
+            <h2 class="h-md">Un Curso de Milagros</h2>
+            <p class="muted">El segundo eje formativo del Centro, con charlas informativas y clases guiadas por Ananda Mariscal.</p>
+            <a class="btn dark" href="https://wa.me/525545117614?text=Hola%2C%20quiero%20informes%20de%20Un%20Curso%20de%20Milagros" target="_blank" rel="noopener">Quiero informes</a>
+          </div>
+          <div class="ratio-23 split-img" data-img="split-2" data-src="img/curso-milagros.jpg"><div class="media-fill"></div></div>
+        </div>
       </div>
     </section>
+
+    <!-- 04 · MEDITACIONES -->
+    <figure class="bleed" id="meditaciones" data-img="bleed-1" data-src="img/meditaciones.jpg">
+      <div class="media-fill"></div>
+      <div class="bleed-overlay"></div>
+      <figcaption class="bleed-cap container">
+        <div class="bleed-text">
+          <h2 class="display-l"><em>Meditaciones</em></h2>
+          <a class="btn glass" href="https://wa.me/525545117614?text=Hola%2C%20quiero%20informes%20de%20las%20meditaciones" target="_blank" rel="noopener">Pregunta por las meditaciones</a>
+        </div>
+      </figcaption>
+    </figure>
   </main>
 
   <!-- FOOTER / CONTACTO -->
@@ -248,11 +146,11 @@
         <span class="f-title">Explora</span>
         <a class="roll" href="#nosotros"><span>Nosotros</span><span>Nosotros</span></a>
         <a class="roll" href="#cursos"><span>Cursos</span><span>Cursos</span></a>
-        <a class="roll" href="#respira"><span>Respira</span><span>Respira</span></a>
+        <a class="roll" href="#meditaciones"><span>Meditaciones</span><span>Meditaciones</span></a>
       </div>
       <div class="f-col">
         <span class="f-title">Encuéntranos</span>
-        <p>Ciudad de México<br>Presencial y en comunidad</p>
+        <p>Ciudad de México</p>
       </div>
       <div class="f-col">
         <span class="f-title">Contacto</span>
@@ -268,7 +166,7 @@
     </div>
 
     <div class="container footer-cta">
-      <h2 class="display-l">Tu corazón ya sabe<br>el camino. <em>Ven a</em><br><em>recordarlo.</em></h2>
+      <h2 class="display-l">Aprende a sanar,<br>servir y <em>ayudar</em>.</h2>
       <a class="btn plain" href="https://wa.me/525545117614?text=Hola%2C%20me%20gustar%C3%ADa%20conocer%20el%20Centro%20del%20Coraz%C3%B3n" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
     </div>
 
